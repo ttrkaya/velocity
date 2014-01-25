@@ -64,7 +64,7 @@ package
 			}
 			
 			var movingPlatformDefs:Vector.<ShapeDefinition> = parser.movingPlatforms;
-			for(i=0; i<movingPlatformDefs.length; ++)
+			for(i=0; i<movingPlatformDefs.length; i++)
 			{
 				var movingPlatformDef:ShapeDefinition = movingPlatformDefs[i];
 				var movingPlatformBody:b2Body = _physicsManager.createKinematicRectangle(
