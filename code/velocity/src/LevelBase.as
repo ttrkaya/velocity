@@ -287,8 +287,8 @@ package
 			_camera.x += (cameraTarget - _camera.x) * 3 * dt;
 			if(_camera.x > 0) _camera.x = 0;
 
-			const alphaRatio:Number = 10;
-			var staticAlphaTarget:Number = (alphaRatio - _avatarBody.GetLinearVelocity().LengthSquared()) / alphaRatio;
+			const staticAlphaRatio:Number = 5;
+			var staticAlphaTarget:Number = (staticAlphaRatio - _avatarBody.GetLinearVelocity().LengthSquared()) / staticAlphaRatio;
 			if(staticAlphaTarget < -1) staticAlphaTarget = -1;
 			else if(staticAlphaTarget > 1.5) staticAlphaTarget = 1.5;
 			_staticAlpha += (staticAlphaTarget - _staticAlpha) * dt;
@@ -301,11 +301,27 @@ package
 				_staticEnemyViews[i].alpha = _staticAlpha;
 			}
 			
-//			for(i=0; i<_movingPlatformBodies.length; i++)
-//			{
-//				var movingPlatformSpeed:b2Vec2 = _movingPlatformBodies[i].GetLinearVelocity().Copy();
-//				movingPlatformSpeed.Subtract(
-//			}
+			const movingAlphaRatio:Number = 45;
+			for(i=0; i<_movingPlatformBodies.length; i++)
+			{
+				var movingPlatformSpeed:b2Vec2 = _movingPlatformBodies[i].GetLinearVelocity().Copy();
+				movingPlatformSpeed.Subtract(_avatarBody.GetLinearVelocity());
+				
+				var movingPlatformAlphaTarget:Number = (movingAlphaRatio - movingPlatformSpeed.LengthSquared()) / movingAlphaRatio;
+				if(movingPlatformAlphaTarget < -1) movingPlatformAlphaTarget = -1;
+				else if(movingPlatformAlphaTarget > 1.5) movingPlatformAlphaTarget = 1.5;
+				_movingPlatformViews[i].alpha += (movingPlatformAlphaTarget - _movingPlatformViews[i].alpha) * dt;
+			}
+			for(i=0; i<_movingEnemyBodies.length; i++)
+			{
+				var movingEnemySpeed:b2Vec2 = _movingEnemyBodies[i].GetLinearVelocity().Copy();
+				movingEnemySpeed.Subtract(_avatarBody.GetLinearVelocity());
+				
+				var movingEnemyAlphaTarget:Number = (movingAlphaRatio - movingEnemySpeed.LengthSquared()) / movingAlphaRatio;
+				if(movingEnemyAlphaTarget < -1) movingEnemyAlphaTarget = -1;
+				else if(movingEnemyAlphaTarget > 1.5) movingEnemyAlphaTarget = 1.5;
+				_movingEnemyViews[i].alpha += (movingEnemyAlphaTarget - _movingEnemyViews[i].alpha) * dt;
+			}
 		}
 		
 		private function isPlayerOnGround():Boolean
