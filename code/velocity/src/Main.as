@@ -27,8 +27,16 @@ package
 			_level = new Level1();
 			this.addChild(_level);
 			
+			var _area:MovingEnemy = new MovingEnemy();
+			this.addChild(_area);
+			
+			var _newPlace:DefLevel1 = new DefLevel1();
+			this.addChild(_newPlace);
+			
 			_lastUpdateTime = getNow();
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			
+			
 		}
 		
 		private function onEnterFrame(e:Event):void
