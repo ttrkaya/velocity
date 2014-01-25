@@ -4,9 +4,10 @@ package parse
 	import flash.display.Shape;
 	import flash.geom.Point;
 	
+	
 	public class Parser
 	{
-		public static const levelDefs:Vector.<MovieClip> = new <MovieClip>[new DefLevel1(), new Level01(), new Level02(), new Level03()];
+		public static var levelDefs:Vector.<MovieClip>;
 		
 		private var _staticPlatforms:Vector.<ShapeDefinition>;
 		private var _movingPlatforms:Vector.<ShapeDefinition>;
@@ -20,7 +21,9 @@ package parse
 		
 		public function Parser()
 		{
-		
+			trace("yo titties!");
+			levelDefs  = new Vector.<MovieClip>[new DefLevel1(), new Level01(), new Level02(), new Level03()];
+			trace(levelDefs[1]);
 		}
 		
 		public function setLevel(levelId:int):void
@@ -32,6 +35,8 @@ package parse
 			_flyingEnemies = new Vector.<ShapeDefinition>();
 			_waypoints = new Vector.<ShapeDefinition>();
 			
+			trace("yo titties!");
+			trace(levelDefs[levelId]);
 			var level:MovieClip = levelDefs[levelId];
 			
 			for (var i:uint = 0; i < level.numChildren; i++)
