@@ -42,6 +42,7 @@ package
 			
 			_staticPlatformBodies = new Vector.<b2Body>;
 			_staticPlatformViews = new Vector.<MovieClip>;
+			
 			_movingPlatformBodies = new Vector.<b2Body>;
 			_movingPlatformViews = new Vector.<MovieClip>;
 			_movingPlatformStartingPoints = new Vector.<Point>;
@@ -57,7 +58,7 @@ package
 			parser.setLevel(levelId);
 			
 			var playerPos:Point = parser.player.startingPosition;
-			_avatarBody = _physicsManager.createPlayer();
+			_avatarBody = _physicsManager.createPlayer(playerPos.x ,playerPos.y);
 				//_physicsManager.createDynamicRectangle(playerPos.x ,playerPos.y, C.PLAYER_W/2, C.PLAYER_H/2);
 			_avatarBody.SetFixedRotation(true);
 			_avatarBody.SetLinearDamping(1.5);
@@ -99,6 +100,7 @@ package
 				movingPlatformView.width = movingPlatformDef.width;
 				movingPlatformView.height = movingPlatformDef.height;
 				movingPlatformView.rotation = movingPlatformDef.rotation;
+				_movingPlatformViews.push(movingPlatformView);
 				_camera.addChild(movingPlatformView);
 				_movingPlatformStartingPoints.push(movingPlatformDef.startingPosition);
 				_movingPlatformEndPoints.push(movingPlatformDef.waypoint);
@@ -114,6 +116,8 @@ package
 		
 		protected function baseUpdate(dt:Number):void
 		{
+			var i:int;
+			
 			_physicsManager.update(dt);
 			
 			var isAvatarOnGround:Boolean = this.isPlayerOnGround();
@@ -134,6 +138,35 @@ package
 			
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
+			
+			for(i=0; i<_movingPlatformBodies.length; i++)
+			{
+				var ratio:Number = _movingPlatformMoveRatios[i];
+				ratio += dt;
+				if(ratio > 1) ratio -= 1;
+				var movedToPos:Point = new Point();
+				if(ratio < 0.5) 
+				{
+					movedToPos.x = _movingPlatformStartingPoints[i].x + 
+						ratio * 2 * (_movingPlatformEndPoints[i].x - _movingPlatformStartingPoints[i].x);
+					movedToPos.y = _movingPlatformStartingPoints[i].y +
+						ratio * 2 * (_movingPlatformEndPoints[i].y - _movingPlatformStartingPoints[i].y);
+				}
+				else
+				{
+					movedToPos.x = _movingPlatformStartingPoints[i].x +
+						(1-ratio) * 2 * (_movingPlatformEndPoints[i].x - _movingPlatformStartingPoints[i].x);
+					movedToPos.y = _movingPlatformStartingPoints[i].y +
+						(1-ratio) * 2 * (_movingPlatformEndPoints[i].y - _movingPlatformStartingPoints[i].y);
+				}
+				_movingPlatformMoveRatios[i] = ratio;
+				_movingPlatformBodies[i].SetLinearVelocity(new b2Vec2(
+					(movedToPos.x/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().x) / dt,
+					(movedToPos.y/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().y) / dt));
+				
+				_movingPlatformViews[i].x = _movingPlatformBodies[i].GetPosition().x * PhysicsManager.RATIO;
+				_movingPlatformViews[i].y = _movingPlatformBodies[i].GetPosition().y * PhysicsManager.RATIO;
+			}
 			
 			_camera.x = 400 - _avatarView.x;
 			if(_camera.x > 0) _camera.x = 0;

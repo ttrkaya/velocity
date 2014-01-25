@@ -52,10 +52,10 @@ package
 			try{_debugSpriteContainer.setChildIndex(_debugSprite,_debugSpriteContainer.numChildren-1);}catch(e:Error){}
 		}
 		
-		public function createPlayer():b2Body
+		public function createPlayer(x:Number, y:Number):b2Body
 		{
 			var bodyDef:b2BodyDef = new b2BodyDef();
-			bodyDef.position.Set(0,0);
+			bodyDef.position.Set(x/RATIO, y/RATIO);
 			
 			var shape:b2PolygonShape = new b2PolygonShape();
 			shape.SetAsBox(C.PLAYER_W*0.5/RATIO, C.PLAYER_H*0.5/RATIO);
