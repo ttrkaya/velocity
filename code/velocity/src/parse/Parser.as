@@ -33,8 +33,6 @@ package parse
 			_flyingEnemies = new Vector.<ShapeDefinition>();
 			_waypoints = new Vector.<ShapeDefinition>();
 			
-			trace("yo titties!");
-			trace(levelDefs[levelId]);
 			var level:MovieClip = levelDefs[levelId];
 			
 			for (var i:uint = 0; i < level.numChildren; i++)
