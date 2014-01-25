@@ -424,6 +424,11 @@ package levels
 			}
 			_bgStatic.alpha = _isBgMoving ? 0 : 1;
 			
+			if (_isBgMoving)
+				SoundManager.playMovingMusic();
+			else
+				SoundManager.fadeOutMovingMusic();
+			
 			if(_avatarView.isHurt && !_avatarView.isInNirvana) _hasBeenHurtTime += dt;
 			if(_hasBeenHurtTime > HURT_WAIT_TIME) _main.restart();
 			if(_avatarBody.GetPosition().y * PhysicsManager.RATIO > 1000) _main.restart();
