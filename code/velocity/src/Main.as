@@ -134,6 +134,7 @@ package
 			_level.destroy();
 			_level = new levelClasses[_currentLevelId](this);
 			this.addChild(_level);
+			SoundManager.syncMusic();
 		}
 		
 		public function advanceLevel():void
@@ -141,6 +142,7 @@ package
 			_currentLevelId++;
 			_currentLevelId %= levelClasses.length;
 			this.restart();
+			SoundManager.syncMusic();
 		}
 	}
 }
