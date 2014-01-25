@@ -1,5 +1,6 @@
 package parse
 {
+	import flash.display.Shape;
 	import flash.geom.Point;
 	
 	public class ShapeDefinition
@@ -11,6 +12,7 @@ package parse
 		public var height:Number;
 		public var rotation:Number;
 		public var tag:int = 0;
+		public var speed:Number = 1;
 		
 		public function ShapeDefinition (_startPos:Point, _width:Number, _height:Number, _rotation:Number = 0)
 		{
@@ -25,13 +27,15 @@ package parse
 			
 			return this;
 		}
-		public function setIdAndRatio (_id:int, _ratio:Number):ShapeDefinition
+		public function setIdAndRatio (_id:int, _ratio:Number, _speed:Number = 1):ShapeDefinition
 		{
 			tag = _id;
 			beginRatio = _ratio;
+			speed = _speed;
 			
 			return this;
 		}
+		
 		public function addWayPoint (_wayPoint:Point):void
 		{
 			waypoint = _wayPoint;

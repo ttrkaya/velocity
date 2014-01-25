@@ -6,7 +6,7 @@ package parse
 	
 	public class Parser
 	{
-		private static const levelDefs:Vector.<MovieClip> = new <MovieClip>[new Level01v01(), new DefLevel1()];
+		private static const levelDefs:Vector.<MovieClip> = new <MovieClip>[new DefLevel1(), new DefLevel1()];
 		
 		private var _staticPlatforms:Vector.<ShapeDefinition>;
 		private var _movingPlatforms:Vector.<ShapeDefinition>;
@@ -42,13 +42,13 @@ package parse
 				if (el is StaticEnemy)
 					_staticEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation));
 				else if (el is MovingEnemy)
-					_movingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio));
+					_movingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio, el.speed));
 				else if (el is FlyingEnemy)
-					_flyingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio));
+					_flyingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio, el.speed));
 				else if (el is StaticPlatform)
 					_staticPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation));
 				else if (el is MovingPlatform)
-					_movingPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio));
+					_movingPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio, el.speed));
 				else if (el is Player)
 					_player = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation);
 				else if (el is EndPoint)
