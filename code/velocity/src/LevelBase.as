@@ -25,6 +25,7 @@ package
 		
 		protected var _staticPlatformBodies:Vector.<b2Body>;
 		protected var _staticPlatformViews:Vector.<MovieClip>;
+		protected var _staticAlpha:Number;
 		
 		protected var _movingPlatformBodies:Vector.<b2Body>;
 		protected var _movingPlatformViews:Vector.<MovieClip>;
@@ -50,6 +51,7 @@ package
 			
 			_staticPlatformBodies = new Vector.<b2Body>;
 			_staticPlatformViews = new Vector.<MovieClip>;
+			_staticAlpha = 1;
 			
 			_movingPlatformBodies = new Vector.<b2Body>;
 			_movingPlatformViews = new Vector.<MovieClip>;
@@ -102,6 +104,7 @@ package
 				staticPlatformView.height = staticPlatformDef.height;
 				staticPlatformView.rotation = staticPlatformDef.rotation;
 				_camera.addChild(staticPlatformView);
+				_staticPlatformViews.push(staticPlatformView);
 			}
 			
 			var movingPlatformDefs:Vector.<ShapeDefinition> = parser.movingPlatforms;
@@ -283,7 +286,26 @@ package
 			var cameraTarget:Number = 400 - _avatarView.x;
 			_camera.x += (cameraTarget - _camera.x) * 3 * dt;
 			if(_camera.x > 0) _camera.x = 0;
-			//_camera.y = 100 - _avatarView.y;
+
+			const alphaRatio:Number = 10;
+			var staticAlphaTarget:Number = (alphaRatio - _avatarBody.GetLinearVelocity().LengthSquared()) / alphaRatio;
+			if(staticAlphaTarget < -1) staticAlphaTarget = -1;
+			else if(staticAlphaTarget > 1.5) staticAlphaTarget = 1.5;
+			_staticAlpha += (staticAlphaTarget - _staticAlpha) * dt;
+			for(i=0; i<_staticPlatformViews.length; i++)
+			{
+				_staticPlatformViews[i].alpha = _staticAlpha;
+			}
+			for(i=0; i<_staticEnemyViews.length; i++)
+			{
+				_staticEnemyViews[i].alpha = _staticAlpha;
+			}
+			
+//			for(i=0; i<_movingPlatformBodies.length; i++)
+//			{
+//				var movingPlatformSpeed:b2Vec2 = _movingPlatformBodies[i].GetLinearVelocity().Copy();
+//				movingPlatformSpeed.Subtract(
+//			}
 		}
 		
 		private function isPlayerOnGround():Boolean
