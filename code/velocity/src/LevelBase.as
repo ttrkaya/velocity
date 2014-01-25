@@ -73,6 +73,11 @@ package
 			
 		}
 		
+		public function destroy():void
+		{
+			_physicsManager.destroy();
+		}
+		
 		protected function parse(levelId:int):void
 		{
 			var i:int;
