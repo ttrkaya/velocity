@@ -23,7 +23,6 @@ package
 			TweenMax.to(_musicStaticChannel, 1, {volume: 1});
 			var music:Sound = new MovingMusic();
 			_musicMovingChannel = MovingMusic.play(0,int.MAX_VALUE,new SoundTransform(0));
-			TweenMax.to(_musicMovingChannel, 1, {volume: 1});
 		}
 		public static function playStartLevelSound():void
 		{
