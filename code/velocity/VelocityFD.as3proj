@@ -51,17 +51,14 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\DefLevel1.swc" />
     <element path="lib\Level01-v01.swc" />
-    <element path="lib\DefLevel2.swc" />
-    <element path="lib\assets.swc" />
-    <element path="lib\levels.swc" />
     <element path="lib\Level02-v01.swc" />
     <element path="lib\Level01-v02.swc" />
     <element path="lib\Level01.swc" />
-    <element path="lib\Level02.swc" />
-    <element path="lib\Level03.swc" />
+    <element path="lib\LevelCollection.swc" />
+    <element path="lib\assets.swc" />
     <element path="lib\Box2D.swc" />
+    <element path="lib\levels.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
