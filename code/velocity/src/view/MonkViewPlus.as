@@ -3,10 +3,12 @@ package view
 	public class MonkViewPlus extends MonkView
 	{
 		public var isHurt:Boolean;
+		public var isInNirvana:Boolean;
 		
 		public function MonkViewPlus()
 		{
 			isHurt = false;
+			isInNirvana = false;
 		}
 		
 		public function idle():void
@@ -33,6 +35,12 @@ package view
 		{
 			isHurt = true;
 			if(this.currentFrame != 5) this.gotoAndStop(5);
+		}
+		
+		public function nirvana():void
+		{
+			isInNirvana = true;
+			if(this.currentFrame != 6) this.gotoAndStop(6);
 		}
 	}
 }

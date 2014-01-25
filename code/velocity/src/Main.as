@@ -41,15 +41,16 @@ package
 			stage.align = StageAlign.TOP;
 			Main.stage = this.stage;
 			
-			_level = new levelClasses[_currentLevelId]();
+			_level = new levelClasses[_currentLevelId](this);
 			this.addChild(_level);
 
-			
 			_lastUpdateTime = getNow();
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			
+			SoundManager.playMusic();
 		}
 		
 		private function onEnterFrame(e:Event):void
@@ -88,20 +89,14 @@ package
 			}
 			if(e.keyCode == Keyboard.R)
 			{
-				this.removeChild(_level);
-				_level.destroy();
-				_level = new levelClasses[_currentLevelId]();
-				this.addChild(_level);
+				this.restart();
 			}
 			if(e.keyCode == Keyboard.O)
 			{
 				if (_currentLevelId < Parser.levelDefs.length - 1)
 				{
 					_currentLevelId++;
-					this.removeChild(_level);
-					_level.destroy();
-					_level = new levelClasses[_currentLevelId]();
-					this.addChild(_level);
+					this.restart();
 				}
 			}
 			if(e.keyCode == Keyboard.P)
@@ -109,10 +104,7 @@ package
 				if (_currentLevelId > 0)
 				{
 					_currentLevelId--;
-					this.removeChild(_level);
-					_level.destroy();
-					_level = new levelClasses[_currentLevelId]();
-					this.addChild(_level);
+					this.restart();
 				}
 			}
 		}
@@ -136,5 +128,19 @@ package
 			}
 		}
 		
+		public function restart():void
+		{
+			this.removeChild(_level);
+			_level.destroy();
+			_level = new levelClasses[_currentLevelId](this);
+			this.addChild(_level);
+		}
+		
+		public function advanceLevel():void
+		{
+			_currentLevelId++;
+			_currentLevelId %= levelClasses.length;
+			this.restart();
+		}
 	}
 }

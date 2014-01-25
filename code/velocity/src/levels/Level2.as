@@ -9,9 +9,9 @@ package levels
 	{
 		private var _platformsView:MovieClip;
 		
-		public function Level2()
+		public function Level2(main:Main)
 		{
-			super();
+			super(main);
 			parse(1);
 			
 			for(var i:int=0; i<_staticPlatformViews.length; i++)
@@ -20,6 +20,8 @@ package levels
 			}
 			_platformsView = new LevelOverlay();
 			_camera.addChild(_platformsView);
+			_foreGround = new ForeGroundMoving();
+			_camera.addChild(_foreGround);
 			_camera.setChildIndex(_avatarView, _camera.numChildren-1);
 		}
 		
@@ -27,6 +29,7 @@ package levels
 		{	
 			baseUpdate(dt);
 			_platformsView.alpha = _staticAlpha;
+			_foreGround.alpha = 1 - _platformsView.alpha;
 		}
 	}
 }

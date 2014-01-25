@@ -18,6 +18,8 @@ package levels
 
 	public class LevelBase extends Sprite
 	{
+		protected var _main:Main;
+		
 		protected var _camera:Sprite;
 		protected var _physicsManager:PhysicsManager;
 		
@@ -50,14 +52,26 @@ package levels
 		
 		protected var _bgStatic:MovieClip;
 		protected var _bgMoving:MovieClip;
+		protected var _foreGround:MovieClip;
+		protected var _isBgMoving:Boolean;
+		
+		protected var _hasBeenHurtTime:Number;
+		protected var _hasBeenInNirvanaTime:Number;
 		
 		private static const MAX_JUMP_WAIT:Number = 0.6;
+		private static const HURT_WAIT_TIME:Number = 1.2;
+		private static const NIRVANA_WAIT_TIME:Number = 4.5;
 		
-		public function LevelBase()
+		public function LevelBase(main:Main)
 		{
+			_main = main;
+			
 			_physicsManager = new PhysicsManager();
 			
 			_jumpWaitTime = 0;
+			_isBgMoving = false;
+			_hasBeenHurtTime = 0;
+			_hasBeenInNirvanaTime = 0;
 			
 			_staticPlatformBodies = new Vector.<b2Body>;
 			_staticPlatformViews = new Vector.<MovieClip>;
@@ -84,7 +98,6 @@ package levels
 			this.addChild(_bgStatic);
 			_camera = new Sprite();
 			this.addChild(_camera);
-			
 		}
 		
 		public function destroy():void
@@ -103,7 +116,7 @@ package levels
 			_avatarBody = _physicsManager.createPlayer(playerPos.x ,playerPos.y);
 				//_physicsManager.createDynamicRectangle(playerPos.x ,playerPos.y, C.PLAYER_W/2, C.PLAYER_H/2);
 			_avatarBody.SetFixedRotation(true);
-			_avatarBody.SetLinearDamping(1.5);
+			_avatarBody.SetLinearDamping(2.5);
 			_avatarFootBody = _physicsManager.createDynamicCircle(0, 0, C.PLAYER_W*0.45);
 			_avatarFootBody.GetFixtureList().SetSensor(true);
 			_avatarView = new MonkViewPlus();
@@ -217,11 +230,14 @@ package levels
 												_avatarBody.GetPosition().y + C.PLAYER_H * 0.5 / PhysicsManager.RATIO));
 			_avatarFootBody.SetLinearVelocity(new b2Vec2());
 			
-			var playerForceX:Number = 0;
-			if(PlayerInput.right) playerForceX = C.PLAYER_FORCE_HOR;
-			else if(PlayerInput.left) playerForceX = -C.PLAYER_FORCE_HOR;
-			var playerForce:b2Vec2 = new b2Vec2(playerForceX, 0);
-			_avatarBody.ApplyForce(playerForce, _avatarBody.GetWorldCenter());
+			if(!_avatarView.isHurt && !_avatarView.isInNirvana)
+			{
+				var playerForceX:Number = 0;
+				if(PlayerInput.right) playerForceX = C.PLAYER_FORCE_HOR;
+				else if(PlayerInput.left) playerForceX = -C.PLAYER_FORCE_HOR;
+				var playerForce:b2Vec2 = new b2Vec2(playerForceX, 0);
+				_avatarBody.ApplyForce(playerForce, _avatarBody.GetWorldCenter());
+			}
 			
 			_jumpWaitTime -= dt;
 			if(PlayerInput.up)
@@ -273,7 +289,7 @@ package levels
 				if(avatarEndContactList.contact.GetFixtureA() == _endBody.GetFixtureList()
 					|| avatarEndContactList.contact.GetFixtureB() == _endBody.GetFixtureList())
 				{
-					_avatarView.hurt();
+					_avatarView.nirvana();
 				}
 			}
 			
@@ -342,9 +358,9 @@ package levels
 
 			const staticAlphaRatio:Number = 5;
 			var staticAlphaTarget:Number = (staticAlphaRatio - _avatarBody.GetLinearVelocity().LengthSquared()) / staticAlphaRatio;
-			if(staticAlphaTarget < -1) staticAlphaTarget = -1;
+			if(staticAlphaTarget < -0.1) staticAlphaTarget = -0.1;
 			else if(staticAlphaTarget > 1.5) staticAlphaTarget = 1.5;
-			_staticAlpha += (staticAlphaTarget - _staticAlpha) * dt;
+			_staticAlpha += (staticAlphaTarget - _staticAlpha) * 5 * dt;
 			for(i=0; i<_staticPlatformViews.length; i++)
 			{
 				_staticPlatformViews[i].alpha = _staticAlpha;
@@ -354,32 +370,23 @@ package levels
 				_staticEnemyViews[i].alpha = _staticAlpha;
 			}
 			
-			const movingAlphaRatio:Number = 45;
+			var avatarSpeed:Number = _avatarBody.GetLinearVelocity().Length();
+			const movingAlphaRatio:Number = 3;
+			var movingAlpha:Number = (avatarSpeed - movingAlphaRatio) / movingAlphaRatio;
+			if(movingAlpha > 0 || _avatarView.isHurt) movingAlpha = 1;
 			for(i=0; i<_movingPlatformBodies.length; i++)
 			{
-				var movingPlatformSpeed:b2Vec2 = _movingPlatformBodies[i].GetLinearVelocity().Copy();
-				movingPlatformSpeed.Subtract(_avatarBody.GetLinearVelocity());
-				
-				var movingPlatformAlphaTarget:Number = (movingAlphaRatio - movingPlatformSpeed.LengthSquared()) / movingAlphaRatio;
-				if(movingPlatformAlphaTarget < -1) movingPlatformAlphaTarget = -1;
-				else if(movingPlatformAlphaTarget > 1.5) movingPlatformAlphaTarget = 1.5;
-				_movingPlatformViews[i].alpha += (movingPlatformAlphaTarget - _movingPlatformViews[i].alpha) * dt;
+				_movingPlatformViews[i].alpha = movingAlpha
 			}
 			for(i=0; i<_movingEnemyBodies.length; i++)
 			{
-				var movingEnemySpeed:b2Vec2 = _movingEnemyBodies[i].GetLinearVelocity().Copy();
-				movingEnemySpeed.Subtract(_avatarBody.GetLinearVelocity());
-				
-				var movingEnemyAlphaTarget:Number = (movingAlphaRatio - movingEnemySpeed.LengthSquared()) / movingAlphaRatio;
-				if(movingEnemyAlphaTarget < -1) movingEnemyAlphaTarget = -1;
-				else if(movingEnemyAlphaTarget > 1.5) movingEnemyAlphaTarget = 1.5;
-				_movingEnemyViews[i].alpha += (movingEnemyAlphaTarget - _movingEnemyViews[i].alpha) * dt;
+				_movingEnemyViews[i].alpha = movingAlpha;
 			}
 			
 			var speedX:Number = _avatarBody.GetLinearVelocity().x;
 			var absSpeedX:Number = Math.abs(speedX);
-			if(speedX != 0) _avatarView.scaleX = (_avatarBody.GetLinearVelocity().x > 0) ? 1 : -1;
-			if(!_avatarView.isHurt)
+			if(speedX != 0 && !_avatarView.isInNirvana) _avatarView.scaleX = (_avatarBody.GetLinearVelocity().x > 0) ? 1 : -1;
+			if(!_avatarView.isHurt && !_avatarView.isInNirvana)
 			{
 				if(isAvatarOnGround)
 				{
@@ -407,7 +414,28 @@ package levels
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO + 10;
 			
-			_bgStatic.alpha = (10 - absSpeedX) / 10;
+			if(!isAvatarOnGround)
+			{
+				_isBgMoving = true;
+			}
+			else
+			{
+				_isBgMoving = _avatarView.currentFrame != 1;
+			}
+			_bgStatic.alpha = _isBgMoving ? 0 : 1;
+			if(_avatarView.isInNirvana) _bgStatic.alpha = 1;
+			
+			if (_isBgMoving && !_avatarView.isInNirvana)
+				SoundManager.playMovingMusic();
+			else
+				SoundManager.fadeOutMovingMusic();
+			
+			if(_avatarView.isHurt && !_avatarView.isInNirvana) _hasBeenHurtTime += dt;
+			if(_hasBeenHurtTime > HURT_WAIT_TIME) _main.restart();
+			if(_avatarBody.GetPosition().y * PhysicsManager.RATIO > 1000) _main.restart();
+			
+			if(_avatarView.isInNirvana) _hasBeenInNirvanaTime += dt;
+			if(_hasBeenInNirvanaTime > NIRVANA_WAIT_TIME) _main.advanceLevel();
 		}
 		
 		private function isPlayerOnGround():Boolean
