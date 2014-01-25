@@ -1,7 +1,10 @@
 package
 {
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.Contacts.b2Contact;
+	import Box2D.Dynamics.Contacts.b2ContactEdge;
 	import Box2D.Dynamics.b2Body;
+	import Box2D.Dynamics.b2Fixture;
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -17,6 +20,7 @@ package
 		protected var _physicsManager:PhysicsManager;
 		
 		protected var _avatarBody:b2Body;
+		protected var _avatarFootBody:b2Body;
 		protected var _avatarView:MovieClip;
 		
 		protected var _staticPlatformBodies:Vector.<b2Body>;
@@ -55,6 +59,8 @@ package
 			var playerPos:Point = parser.player.startingPosition;
 			_avatarBody = _physicsManager.createDynamicRectangle(playerPos.x ,playerPos.y, C.PLAYER_W/2, C.PLAYER_H/2);
 			_avatarBody.SetFixedRotation(true);
+			_avatarFootBody = _physicsManager.createDynamicCircle(0, 0, C.PLAYER_W*0.6);
+			_avatarFootBody.GetFixtureList().SetSensor(true);
 			_avatarView = new AvatarView();
 			_avatarView.width = C.PLAYER_W;
 			_avatarView.height = C.PLAYER_H;
@@ -108,7 +114,10 @@ package
 		{
 			_physicsManager.update(dt);
 			
-			
+			var isAvatarOnGround:Boolean = this.isPlayerOnGround();
+			_avatarFootBody.SetPosition(new b2Vec2(_avatarBody.GetPosition().x, 
+												_avatarBody.GetPosition().y + C.PLAYER_H * 0.3 / PhysicsManager.RATIO));
+			_avatarFootBody.SetLinearVelocity(new b2Vec2());
 			
 			var playerForceX:Number = 0;
 			if(PlayerInput.right) playerForceX = C.PLAYER_FORCE_HOR;
@@ -116,21 +125,54 @@ package
 			var playerForce:b2Vec2 = new b2Vec2(playerForceX, 0);
 			_avatarBody.ApplyForce(playerForce, _avatarBody.GetWorldCenter());
 			
-			if(PlayerInput.up)
+			if(PlayerInput.up && isAvatarOnGround)
 			{
-				PlayerInput.up = false;
-				_avatarBody.ApplyImpulse(new b2Vec2(0,-C.PLAYER_FORCE_JUMP), _avatarBody.GetWorldCenter());
+				_avatarBody.ApplyForce(new b2Vec2(0,-C.PLAYER_FORCE_JUMP), _avatarBody.GetWorldCenter());
 			}
 			
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
 			
 			_camera.x = 400 - _avatarView.x ;
+			if(_camera.x < 0) _camera.x = 0;
 			//_camera.y = 100 - _avatarView.y;
 		}
 		
 		private function isPlayerOnGround():Boolean
 		{
+			var i:int;
+			
+			for(var footContacts:b2ContactEdge = _avatarFootBody.GetContactList();
+				footContacts != null; footContacts = footContacts.next)
+			{
+				var contact:b2Contact = footContacts.contact;
+				if(contact.IsTouching())
+				{
+					var other:b2Fixture;
+					if(contact.GetFixtureA() == _avatarFootBody.GetFixtureList())
+					{
+						other = contact.GetFixtureB();
+					}
+					else if(contact.GetFixtureB() == _avatarFootBody.GetFixtureList())
+					{
+						other = contact.GetFixtureA();
+					}
+					else
+					{
+						continue;
+					}
+					
+					for(i=0; i<_staticPlatformBodies.length; i++)
+					{
+						if(other == _staticPlatformBodies[i].GetFixtureList()) return true;
+					}
+					for(i=0; i<_movingPlatformBodies.length; i++)
+					{
+						if(other == _movingPlatformBodies[i].GetFixtureList()) return true;
+					}
+				}
+			}
+
 			return false;
 		}
 	}
