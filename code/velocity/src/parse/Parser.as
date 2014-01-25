@@ -6,7 +6,7 @@ package parse
 	
 	public class Parser
 	{
-		public static const levelDefs:Vector.<MovieClip> = new <MovieClip>[new DefLevel1(), new Level01(), new Level02(), new Level03()];
+		public static const levelDefs:Vector.<MovieClip> = new <MovieClip>[new DefLevel1()];
 		
 		private var _staticPlatforms:Vector.<ShapeDefinition>;
 		private var _movingPlatforms:Vector.<ShapeDefinition>;
@@ -43,8 +43,6 @@ package parse
 					_staticEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation));
 				else if (el is MovingEnemy)
 					_movingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio, el.speed));
-				else if (el is FlyingEnemy)
-					_flyingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio, el.speed));
 				else if (el is StaticPlatform)
 					_staticPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation));
 				else if (el is MovingPlatform)
@@ -55,6 +53,8 @@ package parse
 					_endPoint = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation);
 				else if (el is Waypoint)
 					_waypoints.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setId(el.id));
+//				else
+//					throw "wtf is this?";
 				el.rotation = rotation;
 			}
 			for each (var waypoint:ShapeDefinition in waypoints)

@@ -11,7 +11,7 @@ package
 	public class Main extends Sprite
 	{
 		private var _level:LevelBase;
-		private var _currentLevelId:int = 1;
+		private var _currentLevelId:int = 0;
 		
 		private var _lastUpdateTime:Number;
 		

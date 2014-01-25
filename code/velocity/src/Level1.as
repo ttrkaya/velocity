@@ -7,7 +7,7 @@ package
 	{
 		
 		
-		public function Level1(levelID:int = 1)
+		public function Level1(levelID:int = 0)
 		{
 			super();
 			parse(levelID);
