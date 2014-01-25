@@ -7,9 +7,9 @@ package levels
 	{
 		
 		
-		public function Level1()
+		public function Level1(main:Main)
 		{
-			super();
+			super(main);
 			parse(0);
 		}
 		

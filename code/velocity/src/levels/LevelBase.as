@@ -18,6 +18,8 @@ package levels
 
 	public class LevelBase extends Sprite
 	{
+		protected var _main:Main;
+		
 		protected var _camera:Sprite;
 		protected var _physicsManager:PhysicsManager;
 		
@@ -53,14 +55,20 @@ package levels
 		protected var _foreGround:MovieClip;
 		protected var _isBgMoving:Boolean;
 		
-		private static const MAX_JUMP_WAIT:Number = 0.6;
+		protected var _hasBeenHurtTime:Number;
 		
-		public function LevelBase()
+		private static const MAX_JUMP_WAIT:Number = 0.6;
+		private static const HURT_WAIT_TIME:Number = 1.2;
+		
+		public function LevelBase(main:Main)
 		{
+			_main = main;
+			
 			_physicsManager = new PhysicsManager();
 			
 			_jumpWaitTime = 0;
 			_isBgMoving = false;
+			_hasBeenHurtTime = 0;
 			
 			_staticPlatformBodies = new Vector.<b2Body>;
 			_staticPlatformViews = new Vector.<MovieClip>;
@@ -359,7 +367,7 @@ package levels
 			var avatarSpeed:Number = _avatarBody.GetLinearVelocity().Length();
 			const movingAlphaRatio:Number = 3;
 			var movingAlpha:Number = (avatarSpeed - movingAlphaRatio) / movingAlphaRatio;
-			if(movingAlpha > 0) movingAlpha = 1;
+			if(movingAlpha > 0 || _avatarView.isHurt) movingAlpha = 1;
 			for(i=0; i<_movingPlatformBodies.length; i++)
 			{
 				_movingPlatformViews[i].alpha = movingAlpha
@@ -409,6 +417,9 @@ package levels
 				_isBgMoving = _avatarView.currentFrame != 1;
 			}
 			_bgStatic.alpha = _isBgMoving ? 0 : 1;
+			
+			if(_avatarView.isHurt) _hasBeenHurtTime += dt;
+			if(_hasBeenHurtTime > HURT_WAIT_TIME) _main.restart();
 		}
 		
 		private function isPlayerOnGround():Boolean

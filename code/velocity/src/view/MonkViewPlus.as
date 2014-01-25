@@ -38,6 +38,5 @@ package view
 		{
 			if(this.currentFrame != 6) this.gotoAndStop(6);
 		}
-		}
 	}
 }

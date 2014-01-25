@@ -9,9 +9,9 @@ package levels
 	{
 		private var _platformsView:MovieClip;
 		
-		public function Level2()
+		public function Level2(main:Main)
 		{
-			super();
+			super(main);
 			parse(1);
 			
 			for(var i:int=0; i<_staticPlatformViews.length; i++)

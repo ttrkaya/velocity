@@ -8,9 +8,9 @@ package levels
 	public class Level4 extends LevelBase
 	{
 		
-		public function Level4()
+		public function Level4(main:Main)
 		{
-			super();
+			super(main);
 			parse(3);
 		}
 		
