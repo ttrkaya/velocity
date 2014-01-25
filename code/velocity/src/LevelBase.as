@@ -5,6 +5,10 @@ package
 	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.media.Video;
+	
+	import parse.Parser;
+	import parse.ShapeDefinition;
 
 	public class LevelBase extends Sprite
 	{
@@ -25,6 +29,25 @@ package
 			
 			_avatarBody = _physicsManager.createDynamicRectangle(0,0, C.PLAYER_HW, C.PLAYER_HH);
 			_avatarBody.SetFixedRotation(true);
+			_avatarView = new AvatarView();
+			this.addChild(_avatarView);
+		}
+		
+		protected function parse(levelId:int):void
+		{
+			var i:int;
+			
+			var parser:Parser = new Parser();
+			parser.setLevel(levelId);
+			var staticPlatformDefs:Vector.<ShapeDefinition> = parser.staticPlatforms;
+			
+			for(i=0; i<staticPlatformDefs.length; i++)
+			{
+				var staticPlatformDef:ShapeDefinition = staticPlatformDefs[i];
+				_physicsManager.createStaticRectangle(
+					staticPlatformDef.startingPosition.x, staticPlatformDef.startingPosition.y, 
+					staticPlatformDef.width/2, staticPlatformDef.height/2, staticPlatformDef.rotation*Math.PI/180);
+			}
 		}
 		
 		public function update(dt:Number):void

@@ -6,7 +6,7 @@ package parse
 	
 	public class Parser
 	{
-		private static const levelDefs:Vector = new <MovieClip>[new DefLevel1(), new DefLevel1()];
+		private static const levelDefs:Vector.<MovieClip> = new <MovieClip>[new DefLevel1(), new DefLevel1()];
 		
 		private var _staticPlatforms:Vector.<ShapeDefinition>;
 		private var _movingPlatforms:Vector.<ShapeDefinition>;
@@ -25,47 +25,51 @@ package parse
 		
 		public function setLevel(levelId:int):void
 		{
-			staticEnemies = new Vector.<ShapeDefinition>();
-			staticPlatforms = new Vector.<ShapeDefinition>();
-			movingEnemies = new Vector.<ShapeDefinition>();
-			movingPlatforms = new Vector.<ShapeDefinition>();
-			flyingEnemies = new Vector.<ShapeDefinition>();
+			_staticEnemies = new Vector.<ShapeDefinition>();
+			_staticPlatforms = new Vector.<ShapeDefinition>();
+			_movingEnemies = new Vector.<ShapeDefinition>();
+			_movingPlatforms = new Vector.<ShapeDefinition>();
+			_flyingEnemies = new Vector.<ShapeDefinition>();
+			_waypoints = new Vector.<ShapeDefinition>();
 			
 			var level:MovieClip = levelDefs[levelId];
 			
 			for (var i:uint = 0; i < level.numChildren; i++)
 			{ //populate the vectors
-				var el:MovieClip = level.getChildAt(i);
+				var el:MovieClip = level.getChildAt(i) as  MovieClip;
+				var rotation:Number = el.rotation;
+				el.rotation = 0;
 				if (el is StaticEnemy)
-					staticEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation));
+					_staticEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation));
 				else if (el is MovingEnemy)
-					movingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation).setIdAndRatio(el.gotoId, el.beginRatio));
+					_movingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio));
 				else if (el is FlyingEnemy)
-					flyingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation).setIdAndRatio(el.gotoId, el.beginRatio));
+					_flyingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio));
 				else if (el is StaticPlatform)
-					staticPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation));
+					_staticPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation));
 				else if (el is MovingPlatform)
-					movingPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation).setIdAndRatio(el.gotoId, el.beginRatio));
+					_movingPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio));
 				else if (el is Player)
-					player = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation);
+					_player = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation);
 				else if (el is EndPoint)
-					endPoint = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation);
+					_endPoint = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation);
 				else if (el is Waypoint)
-					waypoints.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation).setId(el.id));
+					_waypoints.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setId(el.id));
 			}
-			for each (var waypoint:Waypoint in waypoints)
+			for each (var waypoint:ShapeDefinition in waypoints)
 			{ //add the waypoints to the moving elements
-				for each (var movingEnemy:ShapeDefinition in movingEnemies)
+				var wayPointPoint:Point = waypoint.startingPosition;
+				for each (var movingEnemy:ShapeDefinition in _movingEnemies)
 					if (movingEnemy.tag == waypoint.tag)
-						movingEnemy.addWayPoint(new Point(waypoint.x, waypoint.y));
+						movingEnemy.addWayPoint(wayPointPoint);
 				
 				for each (var flyingEnemy:ShapeDefinition in flyingEnemies)
 					if (flyingEnemy.tag == waypoint.tag)
-						flyingEnemy.addWayPoint(new Point(waypoint.x, waypoint.y));
+						flyingEnemy.addWayPoint(wayPointPoint);
 				
 				for each (var movingPlatform:ShapeDefinition in movingPlatforms)
 					if (movingPlatform.tag == waypoint.tag)
-						movingPlatform.addWayPoint(new Point(waypoint.x, waypoint.y));
+						movingPlatform.addWayPoint(wayPointPoint);
 			}
 		}
 		
@@ -98,11 +102,6 @@ package parse
 		public function get waypoints():Vector.<ShapeDefinition> 
 		{
 			return _waypoints;
-		}
-		
-		public function get startPoint():ShapeDefinition 
-		{
-			return _startPoint;
 		}
 		
 		public function get endPoint():ShapeDefinition 

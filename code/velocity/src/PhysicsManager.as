@@ -68,6 +68,14 @@ package
 			
 			return body;
 		}
+		public function createKinematicRectangle(centerX:Number,centerY:Number,halfWidth:Number,halfHeight:Number,angle:Number=0,friction:Number=0.5,restitution:Number=0.5):b2Body
+		{
+			var body:b2Body = this.createRectangleToSetType(centerX,centerY,halfWidth,halfHeight,1,friction,restitution);
+			body.SetAngle(angle);
+			body.SetType(b2Body.b2_kinematicBody);
+			
+			return body;
+		}
 		private function createRectangleToSetType(x:Number,y:Number,hw:Number,hh:Number,density:Number,friction:Number,restitution:Number):b2Body
 		{
 			var bodyDef:b2BodyDef = new b2BodyDef();

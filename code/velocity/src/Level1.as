@@ -10,6 +10,7 @@ package
 		public function Level1()
 		{
 			super();
+			parse(0);
 			
 			_avatarBody = _physicsManager.createDynamicCircle(50, 50, 30);
 		}
@@ -23,6 +24,9 @@ package
 			}
 			
 			_physicsManager.update(dt);
+			
+			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
+			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
 		}
 	}
 }
