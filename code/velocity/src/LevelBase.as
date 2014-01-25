@@ -35,6 +35,12 @@ package
 		protected var _staticEnemyBodies:Vector.<b2Body>;
 		protected var _staticEnemyViews:Vector.<MovieClip>;
 		
+		protected var _movingEnemyBodies:Vector.<b2Body>;
+		protected var _movingEnemyViews:Vector.<MovieClip>;
+		protected var _movingEnemyStartingPoints:Vector.<Point>;
+		protected var _movingEnemyEndPoints:Vector.<Point>;
+		protected var _movingEnemyMoveRatios:Vector.<Number>;
+		
 		public function LevelBase()
 		{
 			_camera = new Sprite();
@@ -50,6 +56,11 @@ package
 			_movingPlatformStartingPoints = new Vector.<Point>;
 			_movingPlatformEndPoints = new Vector.<Point>;
 			_movingPlatformMoveRatios = new Vector.<Number>;
+			
+			_staticEnemyBodies = new Vector.<b2Body>;
+			_staticEnemyViews = new Vector.<MovieClip>;
+			
+			
 		}
 		
 		protected function parse(levelId:int):void
@@ -109,6 +120,23 @@ package
 				_movingPlatformMoveRatios.push(movingPlatformDef.beginRatio);
 			}
 			
+			var staticEnemyDefs:Vector.<ShapeDefinition> = parser.staticEnemies;
+			for(i=0; i<staticEnemyDefs.length; i++)
+			{
+				var staticEnemyDef:ShapeDefinition = staticEnemyDefs[i];
+				var staticEnemyBody:b2Body = _physicsManager.createStaticCircle(
+					staticEnemyDef.startingPosition.x, staticEnemyDef.startingPosition.y, staticEnemyDef.width/2);
+				_staticEnemyBodies.push(staticEnemyBody);
+				
+				var staticEnemyView:MovieClip = new EnemyView();
+				staticEnemyView.width = staticEnemyDef.width;
+				staticEnemyView.height = staticEnemyDef.height;
+				staticEnemyView.x = staticEnemyDef.startingPosition.x;
+				staticEnemyView.y = staticEnemyDef.startingPosition.y;
+				_staticEnemyViews.push(staticEnemyView);
+				_camera.addChild(staticEnemyView);
+			}
+			
 		}
 		
 		public function update(dt:Number):void
@@ -140,6 +168,24 @@ package
 			
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
+			
+			for(var avatarContactList:b2ContactEdge = _avatarBody.GetContactList();
+				avatarContactList != null;
+				avatarContactList = avatarContactList.next)
+			{
+				for(i=0; i<_staticEnemyBodies.length; i++)
+				{
+					if(avatarContactList.contact.GetFixtureA() == _staticEnemyBodies[i].GetFixtureList()
+					|| avatarContactList.contact.GetFixtureB() == _staticEnemyBodies[i].GetFixtureList())
+					{
+						if(avatarContactList.contact.IsTouching())
+						{
+							_avatarView.alpha = 0.2;
+						}
+					}
+				}
+			}
+			
 			
 			for(i=0; i<_movingPlatformBodies.length; i++)
 			{
