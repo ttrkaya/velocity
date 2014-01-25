@@ -1,11 +1,7 @@
 package
 {
-<<<<<<< HEAD
 	import flash.events.Event;
-=======
 	import com.greensock.TweenMax;
-	
->>>>>>> d3eee7307be9f7c69d00cb145bfbe17ea0a26e25
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.media.SoundTransform;
@@ -26,9 +22,15 @@ package
 		{
 			var staticMusic:Sound = new StaticMusic();
 			_musicStaticChannel = staticMusic.play(0, int.MAX_VALUE, new SoundTransform(1));
-			var startingBeat:Sound = new MovingMusicStart();
-			_musicMovingChannel = startingBeat.play(0,int.MAX_VALUE,new SoundTransform(0));
-			_musicMovingChannel.addEventListener(Event.SOUND_COMPLETE, onBeatComplete);
+			
+			//this here is added to start the music with a different beat. Unfortunately, it does not work.
+			//var startingBeat:Sound = new MovingMusicStart();
+			//_musicMovingChannel = startingBeat.play(0,int.MAX_VALUE,new SoundTransform(0));
+			//_musicMovingChannel.addEventListener(Event.SOUND_COMPLETE, onBeatComplete);
+			
+			var movingMusic:Sound = new MovingMusic();
+			_musicMovingChannel = movingMusic.play(0,int.MAX_VALUE,new SoundTransform(0));
+
 		}
 		
 		static private function onBeatComplete(e:Event):void 
@@ -43,25 +45,20 @@ package
 		}
 		public static function playMovingMusic():void	
 		{
-<<<<<<< HEAD
-			_musicMovingChannel.soundTransform = new SoundTransform();
+			if (_musicMovingChannel != null)
+				TweenMax.to(_musicMovingChannel, 1, {volume: 1});
 		}
 		public static function fadeOutMovingMusic():void	
 		{
-			_musicMovingChannel.soundTransform = new SoundTransform(0);
-		}
-		
+			if (_musicMovingChannel != null)
+				TweenMax.to(_musicMovingChannel, 1, {volume: 0});
+		}		
 		public static function syncMusic():void
 		{
 			var movingMusic:Sound = new MovingMusic();
 			_musicMovingChannel = movingMusic.play(_musicStaticChannel.position,int.MAX_VALUE,new SoundTransform(0));
-=======
-			TweenMax.to(_musicMovingChannel, 1, {volume: 1});
+			
 		}
-		public static function fadeOutMovingMusic():void	
-		{
-			TweenMax.to(_musicMovingChannel, 1, {volume: 0});
->>>>>>> d3eee7307be9f7c69d00cb145bfbe17ea0a26e25
-		}
+
 	}
 }

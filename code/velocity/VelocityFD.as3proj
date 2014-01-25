@@ -59,6 +59,7 @@
     <element path="lib\assets.swc" />
     <element path="lib\Box2D.swc" />
     <element path="lib\levels.swc" />
+    <element path="lib\greensock.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
