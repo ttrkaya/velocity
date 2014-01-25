@@ -60,6 +60,11 @@ package
 			_staticEnemyBodies = new Vector.<b2Body>;
 			_staticEnemyViews = new Vector.<MovieClip>;
 			
+			_movingEnemyBodies = new Vector.<b2Body>;
+			_movingEnemyViews = new Vector.<MovieClip>;
+			_movingEnemyStartingPoints = new Vector.<Point>;
+			_movingEnemyEndPoints = new Vector.<Point>;
+			_movingEnemyMoveRatios = new Vector.<Number>;
 			
 		}
 		
@@ -137,6 +142,26 @@ package
 				_camera.addChild(staticEnemyView);
 			}
 			
+			var movingEnemyDefs:Vector.<ShapeDefinition> = parser.movingEnemies;
+			for(i=0; i<movingEnemyDefs.length; i++)
+			{
+				var movingEnemyDef:ShapeDefinition = movingEnemyDefs[i];
+				var movingEnemyBody:b2Body = _physicsManager.createKinematicRectangle(
+					movingEnemyDef.startingPosition.x, movingEnemyDef.startingPosition.y, 
+					movingEnemyDef.width/2, movingEnemyDef.height/2, movingEnemyDef.rotation*Math.PI/180);
+				_movingEnemyBodies.push(movingEnemyBody);
+				var movingEnemyView:MovieClip = new EnemyView();
+				movingEnemyView.x = movingEnemyDef.startingPosition.x;
+				movingEnemyView.y = movingEnemyDef.startingPosition.y;
+				movingEnemyView.width = movingEnemyDef.width;
+				movingEnemyView.height = movingEnemyDef.height;
+				movingEnemyView.rotation = movingEnemyDef.rotation;
+				_movingEnemyViews.push(movingEnemyView);
+				_camera.addChild(movingEnemyView);
+				_movingEnemyStartingPoints.push(movingEnemyDef.startingPosition);
+				_movingEnemyEndPoints.push(movingEnemyDef.waypoint);
+				_movingEnemyMoveRatios.push(movingEnemyDef.beginRatio);
+			}
 		}
 		
 		public function update(dt:Number):void
