@@ -51,7 +51,6 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\Box2D.swc" />
     <element path="lib\DefLevel1.swc" />
     <element path="lib\Level01-v01.swc" />
     <element path="lib\DefLevel2.swc" />
@@ -62,6 +61,7 @@
     <element path="lib\Level01.swc" />
     <element path="lib\Level02.swc" />
     <element path="lib\Level03.swc" />
+    <element path="lib\Box2D.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
