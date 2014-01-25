@@ -32,6 +32,8 @@ package
 		protected var _movingPlatformEndPoints:Vector.<Point>;
 		protected var _movingPlatformMoveRatios:Vector.<Number>;
 		
+		protected var _staticEnemyBodies:Vector.<b2Body>;
+		protected var _staticEnemyViews:Vector.<MovieClip>;
 		
 		public function LevelBase()
 		{
