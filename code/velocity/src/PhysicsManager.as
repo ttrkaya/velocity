@@ -40,12 +40,13 @@ package
 			debugDrawer.SetFillAlpha(0.1);
 			debugDrawer.SetFlags(b2DebugDraw.e_shapeBit);
 			_world.SetDebugDraw(debugDrawer);
-			_debugSpriteContainer.addChild(_debugSprite);
+			//_debugSpriteContainer.addChild(_debugSprite);
 		}
 		
 		public function destroy():void
 		{
-			_debugSpriteContainer.removeChild(_debugSprite);
+			if(_debugSprite && _debugSpriteContainer && _debugSpriteContainer.contains(_debugSprite)) 
+				_debugSpriteContainer.removeChild(_debugSprite);
 		}
 		
 		public function update(dt:Number):void
@@ -69,7 +70,7 @@ package
 			fixDef.shape = shape;
 			fixDef.density = 1;
 			fixDef.friction = 0.3;
-			fixDef.restitution = 0.2;
+			fixDef.restitution = 0;
 			
 			var circleShape:b2CircleShape = new b2CircleShape(C.PLAYER_W*0.6/RATIO);
 			circleShape.SetLocalPosition(new b2Vec2(0, C.PLAYER_H*0.3/PhysicsManager.RATIO));
@@ -77,7 +78,7 @@ package
 			circleFixDef.shape = circleShape;
 			circleFixDef.density = 1;
 			circleFixDef.friction = 0.1;
-			circleFixDef.restitution = 0.2;
+			circleFixDef.restitution = 0;
 			
 			var body:b2Body = _world.CreateBody(bodyDef);
 			body.CreateFixture(fixDef);
