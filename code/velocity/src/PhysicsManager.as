@@ -27,7 +27,7 @@ package
 			_debugSpriteContainer = Main.stage;
 			
 			var gravity:b2Vec2 = new b2Vec2();
-			gravity.Set(0,30);
+			gravity.Set(0,50);
 			_world = new b2World(gravity,true);
 			
 			_debugSprite = new Sprite();

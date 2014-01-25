@@ -22,6 +22,7 @@ package
 		protected var _avatarBody:b2Body;
 		protected var _avatarFootBody:b2Body;
 		protected var _avatarView:MovieClip;
+		protected var _jumpWaitTime:Number;
 		
 		protected var _endBody:b2Body;
 		protected var _endView:MovieClip;
@@ -45,12 +46,13 @@ package
 		protected var _movingEnemyEndPoints:Vector.<Point>;
 		protected var _movingEnemyMoveRatios:Vector.<Number>;
 		
+		private static const MAX_JUMP_WAIT:Number = 0.6;
+		
 		public function LevelBase()
 		{
-			_camera = new Sprite();
-			this.addChild(_camera);
-			
 			_physicsManager = new PhysicsManager();
+			
+			_jumpWaitTime = 0;
 			
 			_staticPlatformBodies = new Vector.<b2Body>;
 			_staticPlatformViews = new Vector.<MovieClip>;
@@ -70,6 +72,9 @@ package
 			_movingEnemyStartingPoints = new Vector.<Point>;
 			_movingEnemyEndPoints = new Vector.<Point>;
 			_movingEnemyMoveRatios = new Vector.<Number>;
+			
+			_camera = new Sprite();
+			this.addChild(_camera);
 			
 		}
 		
@@ -97,7 +102,7 @@ package
 			_avatarView.height = C.PLAYER_H;
 			_camera.addChild(_avatarView);
 			
-			var endPos:Point = parser.endPoint.startingPosition;
+			var endPos:Point = new Point();//parser.endPoint.startingPosition;
 			_endBody = _physicsManager.createStaticCircle(endPos.x, endPos.y, 5);
 			_endView = new MovingPlatform();
 			_endView.alpha = 0.5;
@@ -207,10 +212,21 @@ package
 			var playerForce:b2Vec2 = new b2Vec2(playerForceX, 0);
 			_avatarBody.ApplyForce(playerForce, _avatarBody.GetWorldCenter());
 			
-			if(PlayerInput.up && isAvatarOnGround)
+			_jumpWaitTime -= dt;
+			if(PlayerInput.up)
 			{
-				_avatarBody.ApplyForce(new b2Vec2(0,-C.PLAYER_FORCE_JUMP), _avatarBody.GetWorldCenter());
+				if(_avatarBody.GetLinearVelocity().y < -2)
+				{
+					_avatarBody.ApplyForce(new b2Vec2(0,-C.PLAYER_FORCE_JUMP_ENRFORCE), _avatarBody.GetWorldCenter());
+				}
+				
+				if(_jumpWaitTime < 0 && isAvatarOnGround)
+				{
+					_jumpWaitTime = MAX_JUMP_WAIT;
+					_avatarBody.ApplyImpulse(new b2Vec2(0,-C.PLAYER_FORCE_JUMP), _avatarBody.GetWorldCenter());
+				}
 			}
+			
 			
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;

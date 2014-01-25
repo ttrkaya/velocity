@@ -5,6 +5,7 @@ package
 		public static const PLAYER_W:Number = 30;
 		public static const PLAYER_H:Number = 50;
 		public static const PLAYER_FORCE_HOR:Number = 50;
-		public static const PLAYER_FORCE_JUMP:Number = 700;
+		public static const PLAYER_FORCE_JUMP:Number = 40;
+		public static const PLAYER_FORCE_JUMP_ENRFORCE:Number = 120;
 	}
 }
