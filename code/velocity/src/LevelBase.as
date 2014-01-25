@@ -13,7 +13,7 @@ package
 		
 		public function update(dt:Number):void
 		{
-			_physicsManager.update(dt);
+			throw "override this!";
 		}
 	}
 }
