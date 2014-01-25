@@ -4,6 +4,7 @@ package
 	import flash.display.Stage;
 	import flash.events.Event;
 	
+	[SWF(width="800", height="600", frameRate="30",backgroundColor="#888888")]
 	public class Main extends Sprite
 	{
 		private var _level:LevelBase;
