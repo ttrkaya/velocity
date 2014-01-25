@@ -103,7 +103,7 @@ package levels
 			_avatarBody = _physicsManager.createPlayer(playerPos.x ,playerPos.y);
 				//_physicsManager.createDynamicRectangle(playerPos.x ,playerPos.y, C.PLAYER_W/2, C.PLAYER_H/2);
 			_avatarBody.SetFixedRotation(true);
-			_avatarBody.SetLinearDamping(1.5);
+			_avatarBody.SetLinearDamping(2.5);
 			_avatarFootBody = _physicsManager.createDynamicCircle(0, 0, C.PLAYER_W*0.45);
 			_avatarFootBody.GetFixtureList().SetSensor(true);
 			_avatarView = new MonkViewPlus();
@@ -408,6 +408,7 @@ package levels
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO + 10;
 			
 			_bgStatic.alpha = (10 - absSpeedX) / 10;
+			_bgStatic.alpha = (_bgStatic.alpha < 0.7) ? 0 : 1;
 		}
 		
 		private function isPlayerOnGround():Boolean
