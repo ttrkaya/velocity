@@ -141,6 +141,7 @@ package
 			_currentLevelId++;
 			_currentLevelId %= levelClasses.length;
 			this.restart();
+			//SoundManager.playMusic();	
 		}
 	}
 }

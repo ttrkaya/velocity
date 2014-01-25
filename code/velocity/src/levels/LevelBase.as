@@ -61,6 +61,7 @@ package levels
 		private static const MAX_JUMP_WAIT:Number = 0.6;
 		private static const HURT_WAIT_TIME:Number = 1.2;
 		private static const NIRVANA_WAIT_TIME:Number = 4.5;
+		private static const GHOST_PASSING_SOUND_DISTANCE:Number = 40;
 		
 		public function LevelBase(main:Main)
 		{
@@ -290,7 +291,8 @@ package levels
 					|| avatarEndContactList.contact.GetFixtureB() == _endBody.GetFixtureList())
 				{
 					_avatarView.nirvana();
-					SoundManager.syncMusic();
+					SoundManager.fadeOutMovingMusic();
+					SoundManager.playLevelEndSound();
 				}
 			}
 			
@@ -350,6 +352,10 @@ package levels
 				
 				_movingEnemyViews[i].x = _movingEnemyBodies[i].GetPosition().x * PhysicsManager.RATIO;
 				_movingEnemyViews[i].y = _movingEnemyBodies[i].GetPosition().y * PhysicsManager.RATIO;
+				
+				var dist:Number = Math.abs(_avatarView.x - _movingEnemyViews[i].x);//Point.distance(new Point(_movingEnemyViews[i].x, _movingEnemyViews[i].y), new Point(_avatarView.x, _avatarView.y));
+				if (dist < GHOST_PASSING_SOUND_DISTANCE)
+					SoundManager.playGhostSound();
 			}
 			
 			var cameraTarget:Number = 400 - _avatarView.x;

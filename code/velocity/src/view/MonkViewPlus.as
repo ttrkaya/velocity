@@ -13,12 +13,20 @@ package view
 		
 		public function idle():void
 		{
-			if(this.currentFrame != 1) this.gotoAndStop(1);
+			if (this.currentFrame != 1) 
+			{
+				SoundManager.playLandSound();
+				this.gotoAndStop(1);
+			}
 		}
 		
 		public function walk():void
 		{
-			if(this.currentFrame != 2) this.gotoAndStop(2);
+			if (this.currentFrame != 2) 
+			{
+				SoundManager.playLandSound();
+				this.gotoAndStop(2);
+			}
 		}
 		
 		public function run():void
@@ -28,7 +36,11 @@ package view
 		
 		public function jump():void
 		{
-			if(this.currentFrame != 4) this.gotoAndStop(4);
+			if (this.currentFrame != 4) 
+			{
+				SoundManager.playJumpSound();
+				this.gotoAndStop(4);
+			}
 		}
 		
 		public function hurt():void
