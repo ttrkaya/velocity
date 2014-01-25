@@ -13,6 +13,7 @@ package
 
 	public class LevelBase extends Sprite
 	{
+		protected var _camera:Sprite;
 		protected var _physicsManager:PhysicsManager;
 		
 		protected var _avatarBody:b2Body;
@@ -30,6 +31,9 @@ package
 		
 		public function LevelBase()
 		{
+			_camera = new Sprite();
+			this.addChild(_camera);
+			
 			_physicsManager = new PhysicsManager();
 			
 			_staticPlatformBodies = new Vector.<b2Body>;
@@ -54,7 +58,7 @@ package
 			_avatarView = new AvatarView();
 			_avatarView.width = C.PLAYER_W;
 			_avatarView.height = C.PLAYER_H;
-			this.addChild(_avatarView);
+			_camera.addChild(_avatarView);
 			
 			var staticPlatformDefs:Vector.<ShapeDefinition> = parser.staticPlatforms;
 			for(i=0; i<staticPlatformDefs.length; i++)
@@ -64,6 +68,13 @@ package
 					staticPlatformDef.startingPosition.x, staticPlatformDef.startingPosition.y, 
 					staticPlatformDef.width/2, staticPlatformDef.height/2, staticPlatformDef.rotation*Math.PI/180);
 				_staticPlatformBodies.push(staticPlatformerBody);
+				var staticPlatformView:MovieClip = new StaticPlatformerView();
+				staticPlatformView.x = staticPlatformDef.startingPosition.x;
+				staticPlatformView.y = staticPlatformDef.startingPosition.y;
+				staticPlatformView.width = staticPlatformDef.width;
+				staticPlatformView.height = staticPlatformDef.height;
+				staticPlatformView.rotation = staticPlatformDef.rotation;
+				_camera.addChild(staticPlatformView);
 			}
 			
 			var movingPlatformDefs:Vector.<ShapeDefinition> = parser.movingPlatforms;
@@ -80,6 +91,7 @@ package
 				movingPlatformView.width = movingPlatformDef.width;
 				movingPlatformView.height = movingPlatformDef.height;
 				movingPlatformView.rotation = movingPlatformDef.rotation;
+				_camera.addChild(movingPlatformView);
 				_movingPlatformStartingPoints.push(movingPlatformDef.startingPosition);
 				_movingPlatformEndPoints.push(movingPlatformDef.waypoint);
 				_movingPlatformMoveRatios.push(movingPlatformDef.beginRatio);
@@ -112,6 +124,9 @@ package
 			
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
+			
+			_camera.x = 400 - _avatarView.x ;
+			//_camera.y = 100 - _avatarView.y;
 		}
 		
 		private function isPlayerOnGround():Boolean
