@@ -15,7 +15,6 @@ package parse
 		private var _staticEnemies:Vector.<ShapeDefinition>;
 		private var _waypoints:Vector.<ShapeDefinition>;
 		
-		private var _startPoint:ShapeDefinition;
 		private var _endPoint:ShapeDefinition;
 		private var _player:ShapeDefinition;
 		
@@ -49,8 +48,6 @@ package parse
 					movingPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation).setIdAndRatio(el.gotoId, el.beginRatio));
 				else if (el is Player)
 					player = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation);
-				else if (el is StartingPoint)
-					startPoint = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation);
 				else if (el is EndPoint)
 					endPoint = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, el.rotation);
 				else if (el is Waypoint)
@@ -60,15 +57,15 @@ package parse
 			{ //add the waypoints to the moving elements
 				for each (var movingEnemy:ShapeDefinition in movingEnemies)
 					if (movingEnemy.tag == waypoint.tag)
-						movingEnemy.addWayPoint(waypoint);
+						movingEnemy.addWayPoint(new Point(waypoint.x, waypoint.y));
 				
 				for each (var flyingEnemy:ShapeDefinition in flyingEnemies)
 					if (flyingEnemy.tag == waypoint.tag)
-						flyingEnemy.addWayPoint(waypoint);
+						flyingEnemy.addWayPoint(new Point(waypoint.x, waypoint.y));
 				
 				for each (var movingPlatform:ShapeDefinition in movingPlatforms)
 					if (movingPlatform.tag == waypoint.tag)
-						movingPlatform.addWayPoint(waypoint);
+						movingPlatform.addWayPoint(new Point(waypoint.x, waypoint.y));
 			}
 		}
 		
