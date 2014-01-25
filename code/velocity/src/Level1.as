@@ -16,9 +16,6 @@ package
 		public override function update(dt:Number):void
 		{	
 			baseUpdate(dt);
-			
-			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
-			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
 		}
 	}
 }
