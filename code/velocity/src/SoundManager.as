@@ -1,5 +1,7 @@
 package
 {
+	import com.greensock.TweenMax;
+	
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.media.SoundTransform;
@@ -30,13 +32,11 @@ package
 		}
 		public static function playMovingMusic():void	
 		{
-			_musicMovingChannel.soundTransform = new SoundTransform();
-			//TweenMax.to(_musicMovingChannel, 1, {volume: 1});
+			TweenMax.to(_musicMovingChannel, 1, {volume: 1});
 		}
 		public static function fadeOutMovingMusic():void	
 		{
-			_musicMovingChannel.soundTransform = new SoundTransform(0);
-			//TweenMax.to(_musicMovingChannel, 1, {volume: 0});
+			TweenMax.to(_musicMovingChannel, 1, {volume: 0});
 		}
 	}
 }
