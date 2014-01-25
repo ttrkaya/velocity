@@ -20,6 +20,8 @@ package levels
 			}
 			_platformsView = new LevelOverlay();
 			_camera.addChild(_platformsView);
+			_foreGround = new ForeGroundMoving();
+			_camera.addChild(_foreGround);
 			_camera.setChildIndex(_avatarView, _camera.numChildren-1);
 		}
 		
@@ -27,6 +29,7 @@ package levels
 		{	
 			baseUpdate(dt);
 			_platformsView.alpha = _staticAlpha;
+			_foreGround.alpha = 1 - _platformsView.alpha;
 		}
 	}
 }

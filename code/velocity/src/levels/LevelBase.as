@@ -50,6 +50,7 @@ package levels
 		
 		protected var _bgStatic:MovieClip;
 		protected var _bgMoving:MovieClip;
+		protected var _foreGround:MovieClip;
 		protected var _isBgMoving:Boolean;
 		
 		private static const MAX_JUMP_WAIT:Number = 0.6;
@@ -343,9 +344,9 @@ package levels
 
 			const staticAlphaRatio:Number = 5;
 			var staticAlphaTarget:Number = (staticAlphaRatio - _avatarBody.GetLinearVelocity().LengthSquared()) / staticAlphaRatio;
-			if(staticAlphaTarget < -1) staticAlphaTarget = -1;
+			if(staticAlphaTarget < -0.1) staticAlphaTarget = -0.1;
 			else if(staticAlphaTarget > 1.5) staticAlphaTarget = 1.5;
-			_staticAlpha += (staticAlphaTarget - _staticAlpha) * dt;
+			_staticAlpha += (staticAlphaTarget - _staticAlpha) * 5 * dt;
 			for(i=0; i<_staticPlatformViews.length; i++)
 			{
 				_staticPlatformViews[i].alpha = _staticAlpha;
@@ -355,26 +356,17 @@ package levels
 				_staticEnemyViews[i].alpha = _staticAlpha;
 			}
 			
-			const movingAlphaRatio:Number = 45;
+			var avatarSpeed:Number = _avatarBody.GetLinearVelocity().Length();
+			const movingAlphaRatio:Number = 3;
+			var movingAlpha:Number = (avatarSpeed - movingAlphaRatio) / movingAlphaRatio;
+			if(movingAlpha > 0) movingAlpha = 1;
 			for(i=0; i<_movingPlatformBodies.length; i++)
 			{
-				var movingPlatformSpeed:b2Vec2 = _movingPlatformBodies[i].GetLinearVelocity().Copy();
-				movingPlatformSpeed.Subtract(_avatarBody.GetLinearVelocity());
-				
-				var movingPlatformAlphaTarget:Number = (movingAlphaRatio - movingPlatformSpeed.LengthSquared()) / movingAlphaRatio;
-				if(movingPlatformAlphaTarget < -1) movingPlatformAlphaTarget = -1;
-				else if(movingPlatformAlphaTarget > 1.5) movingPlatformAlphaTarget = 1.5;
-				_movingPlatformViews[i].alpha += (movingPlatformAlphaTarget - _movingPlatformViews[i].alpha) * dt;
+				_movingPlatformViews[i].alpha = movingAlpha
 			}
 			for(i=0; i<_movingEnemyBodies.length; i++)
 			{
-				var movingEnemySpeed:b2Vec2 = _movingEnemyBodies[i].GetLinearVelocity().Copy();
-				movingEnemySpeed.Subtract(_avatarBody.GetLinearVelocity());
-				
-				var movingEnemyAlphaTarget:Number = (movingAlphaRatio - movingEnemySpeed.LengthSquared()) / movingAlphaRatio;
-				if(movingEnemyAlphaTarget < -1) movingEnemyAlphaTarget = -1;
-				else if(movingEnemyAlphaTarget > 1.5) movingEnemyAlphaTarget = 1.5;
-				_movingEnemyViews[i].alpha += (movingEnemyAlphaTarget - _movingEnemyViews[i].alpha) * dt;
+				_movingEnemyViews[i].alpha = movingAlpha;
 			}
 			
 			var speedX:Number = _avatarBody.GetLinearVelocity().x;
@@ -407,9 +399,6 @@ package levels
 			}
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO + 10;
-			
-			_bgStatic.alpha = (10 - absSpeedX) / 10;
-			_bgStatic.alpha = (_bgStatic.alpha < 0.7) ? 0 : 1;
 			
 			if(!isAvatarOnGround)
 			{
