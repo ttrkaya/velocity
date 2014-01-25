@@ -166,8 +166,8 @@ package levels
 				movingPlatformView.x = movingPlatformDef.startingPosition.x;
 				movingPlatformView.y = movingPlatformDef.startingPosition.y;
 				movingPlatformView.width = movingPlatformDef.width;
-				movingPlatformView.height = movingPlatformDef.height;
-				movingPlatformView.rotation = movingPlatformDef.rotation;
+				movingPlatformView.height = movingPlatformDef.height * 2;
+				movingPlatformView.rotation = movingPlatformDef.rotation * 2;
 				_movingPlatformViews.push(movingPlatformView);
 				_camera.addChild(movingPlatformView);
 				_movingPlatformStartingPoints.push(movingPlatformDef.startingPosition);
