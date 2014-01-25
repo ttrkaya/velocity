@@ -34,5 +34,10 @@ package view
 			isHurt = true;
 			if(this.currentFrame != 5) this.gotoAndStop(5);
 		}
+		public function win():void
+		{
+			if(this.currentFrame != 6) this.gotoAndStop(6);
+		}
+		}
 	}
 }
