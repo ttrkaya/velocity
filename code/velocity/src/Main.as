@@ -44,6 +44,8 @@ package
 			_lastUpdateTime = now;
 			
 			_level.update(dt);
+			
+			
 		}
 		
 		private function getNow():Number

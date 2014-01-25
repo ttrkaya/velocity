@@ -13,6 +13,7 @@ package
 
 	public class LevelBase extends Sprite
 	{
+		protected var _camera:Sprite;
 		protected var _physicsManager:PhysicsManager;
 		
 		protected var _avatarBody:b2Body;
@@ -30,12 +31,10 @@ package
 		
 		public function LevelBase()
 		{
-			_physicsManager = new PhysicsManager();
+			_camera = new Sprite();
+			this.addChild(_camera);
 			
-			_avatarBody = _physicsManager.createDynamicRectangle(0,0, C.PLAYER_HW, C.PLAYER_HH);
-			_avatarBody.SetFixedRotation(true);
-			_avatarView = new AvatarView();
-			this.addChild(_avatarView);
+			_physicsManager = new PhysicsManager();
 			
 			_staticPlatformBodies = new Vector.<b2Body>;
 			_staticPlatformViews = new Vector.<MovieClip>;
@@ -53,6 +52,14 @@ package
 			var parser:Parser = new Parser();
 			parser.setLevel(levelId);
 			
+			var playerPos:Point = parser.player.startingPosition;
+			_avatarBody = _physicsManager.createDynamicRectangle(playerPos.x ,playerPos.y, C.PLAYER_W/2, C.PLAYER_H/2);
+			_avatarBody.SetFixedRotation(true);
+			_avatarView = new AvatarView();
+			_avatarView.width = C.PLAYER_W;
+			_avatarView.height = C.PLAYER_H;
+			_camera.addChild(_avatarView);
+			
 			var staticPlatformDefs:Vector.<ShapeDefinition> = parser.staticPlatforms;
 			for(i=0; i<staticPlatformDefs.length; i++)
 			{
@@ -61,6 +68,13 @@ package
 					staticPlatformDef.startingPosition.x, staticPlatformDef.startingPosition.y, 
 					staticPlatformDef.width/2, staticPlatformDef.height/2, staticPlatformDef.rotation*Math.PI/180);
 				_staticPlatformBodies.push(staticPlatformerBody);
+				var staticPlatformView:MovieClip = new StaticPlatformerView();
+				staticPlatformView.x = staticPlatformDef.startingPosition.x;
+				staticPlatformView.y = staticPlatformDef.startingPosition.y;
+				staticPlatformView.width = staticPlatformDef.width;
+				staticPlatformView.height = staticPlatformDef.height;
+				staticPlatformView.rotation = staticPlatformDef.rotation;
+				_camera.addChild(staticPlatformView);
 			}
 			
 			var movingPlatformDefs:Vector.<ShapeDefinition> = parser.movingPlatforms;
@@ -72,6 +86,15 @@ package
 					movingPlatformDef.width/2, movingPlatformDef.height/2, movingPlatformDef.rotation*Math.PI/180);
 				_movingPlatformBodies.push(movingPlatformBody);
 				var movingPlatformView:MovieClip = new MovingPlatformerView();
+				movingPlatformView.x = movingPlatformDef.startingPosition.x;
+				movingPlatformView.y = movingPlatformDef.startingPosition.y;
+				movingPlatformView.width = movingPlatformDef.width;
+				movingPlatformView.height = movingPlatformDef.height;
+				movingPlatformView.rotation = movingPlatformDef.rotation;
+				_camera.addChild(movingPlatformView);
+				_movingPlatformStartingPoints.push(movingPlatformDef.startingPosition);
+				_movingPlatformEndPoints.push(movingPlatformDef.waypoint);
+				_movingPlatformMoveRatios.push(movingPlatformDef.beginRatio);
 			}
 			
 		}
@@ -83,14 +106,32 @@ package
 		
 		protected function baseUpdate(dt:Number):void
 		{
+			_physicsManager.update(dt);
+			
+			
+			
 			var playerForceX:Number = 0;
 			if(PlayerInput.right) playerForceX = C.PLAYER_FORCE_HOR;
 			else if(PlayerInput.left) playerForceX = -C.PLAYER_FORCE_HOR;
 			var playerForce:b2Vec2 = new b2Vec2(playerForceX, 0);
 			_avatarBody.ApplyForce(playerForce, _avatarBody.GetWorldCenter());
 			
+			if(PlayerInput.up)
+			{
+				PlayerInput.up = false;
+				_avatarBody.ApplyImpulse(new b2Vec2(0,-C.PLAYER_FORCE_JUMP), _avatarBody.GetWorldCenter());
+			}
+			
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
+			
+			_camera.x = 400 - _avatarView.x ;
+			//_camera.y = 100 - _avatarView.y;
+		}
+		
+		private function isPlayerOnGround():Boolean
+		{
+			return false;
 		}
 	}
 }
