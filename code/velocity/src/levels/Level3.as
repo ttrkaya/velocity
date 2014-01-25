@@ -1,16 +1,16 @@
-package
+package levels
 {
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
 
-	public class Level1 extends LevelBase
+	public class Level3 extends LevelBase
 	{
 		
 		
-		public function Level1(levelID:int = 0)
+		public function Level3()
 		{
 			super();
-			parse(levelID);
+			parse(2);
 		}
 		
 		public override function update(dt:Number):void

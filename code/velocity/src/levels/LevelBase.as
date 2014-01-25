@@ -1,4 +1,4 @@
-package
+package levels
 {
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Contacts.b2Contact;
@@ -48,6 +48,9 @@ package
 		protected var _movingEnemyEndPoints:Vector.<Point>;
 		protected var _movingEnemyMoveRatios:Vector.<Number>;
 		
+		protected var _bgStatic:MovieClip;
+		protected var _bgMoving:MovieClip;
+		
 		private static const MAX_JUMP_WAIT:Number = 0.6;
 		
 		public function LevelBase()
@@ -75,6 +78,10 @@ package
 			_movingEnemyEndPoints = new Vector.<Point>;
 			_movingEnemyMoveRatios = new Vector.<Number>;
 			
+			_bgMoving = new BackGroundMoving();
+			this.addChild(_bgMoving);
+			_bgStatic = new BackGroundStatic();
+			this.addChild(_bgStatic);
 			_camera = new Sprite();
 			this.addChild(_camera);
 			
@@ -331,6 +338,7 @@ package
 			var cameraTarget:Number = 400 - _avatarView.x;
 			_camera.x += (cameraTarget - _camera.x) * 3 * dt;
 			if(_camera.x > 0) _camera.x = 0;
+			_bgMoving.x = _bgStatic.x = _camera.x / 3;
 
 			const staticAlphaRatio:Number = 5;
 			var staticAlphaTarget:Number = (staticAlphaRatio - _avatarBody.GetLinearVelocity().LengthSquared()) / staticAlphaRatio;
@@ -369,6 +377,7 @@ package
 			}
 			
 			var speedX:Number = _avatarBody.GetLinearVelocity().x;
+			var absSpeedX:Number = Math.abs(speedX);
 			if(speedX != 0) _avatarView.scaleX = (_avatarBody.GetLinearVelocity().x > 0) ? 1 : -1;
 			if(!_avatarView.isHurt)
 			{
@@ -380,8 +389,7 @@ package
 					}
 					else
 					{
-						var absSpeed:Number = Math.abs(_avatarBody.GetLinearVelocity().x);
-						if(absSpeed < 5)
+						if(absSpeedX < 5)
 						{
 							_avatarView.walk();
 						}
@@ -399,6 +407,7 @@ package
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO + 10;
 			
+			_bgStatic.alpha = (10 - absSpeedX) / 10;
 		}
 		
 		private function isPlayerOnGround():Boolean

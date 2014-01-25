@@ -2,9 +2,18 @@ package
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
+	
+	import levels.Level1;
+	import levels.Level2;
+	import levels.Level3;
+	import levels.Level4;
+	import levels.LevelBase;
+	
 	import parse.Parser;
 	
 	[SWF(width="800", height="600", frameRate="30",backgroundColor="#888888")]
@@ -17,6 +26,8 @@ package
 		
 		public static var stage:Stage;
 		
+		private static const levelClasses:Vector.<Class> = new <Class>[Level1, Level2, Level3, Level4];
+		
 		public function Main()
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
@@ -26,9 +37,11 @@ package
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			
+			stage.scaleMode = StageScaleMode.SHOW_ALL;
+			stage.align = StageAlign.TOP;
 			Main.stage = this.stage;
 			
-			_level = new Level1(_currentLevelId);
+			_level = new levelClasses[_currentLevelId]();
 			this.addChild(_level);
 
 			
@@ -73,6 +86,13 @@ package
 			{
 				PlayerInput.down = true;
 			}
+			if(e.keyCode == Keyboard.R)
+			{
+				this.removeChild(_level);
+				_level.destroy();
+				_level = new levelClasses[_currentLevelId]();
+				this.addChild(_level);
+			}
 			if(e.keyCode == Keyboard.O)
 			{
 				if (_currentLevelId < Parser.levelDefs.length - 1)
@@ -80,7 +100,7 @@ package
 					_currentLevelId++;
 					this.removeChild(_level);
 					_level.destroy();
-					_level = new Level1(_currentLevelId);
+					_level = new levelClasses[_currentLevelId]();
 					this.addChild(_level);
 				}
 			}
@@ -91,7 +111,7 @@ package
 					_currentLevelId--;
 					this.removeChild(_level);
 					_level.destroy();
-					_level = new Level1(_currentLevelId);
+					_level = new levelClasses[_currentLevelId]();
 					this.addChild(_level);
 				}
 			}
