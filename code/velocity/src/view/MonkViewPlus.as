@@ -2,9 +2,11 @@ package view
 {
 	public class MonkViewPlus extends MonkView
 	{
+		public var isHurt:Boolean;
+		
 		public function MonkViewPlus()
 		{
-			super();
+			isHurt = false;
 		}
 		
 		public function idle():void
@@ -29,6 +31,7 @@ package view
 		
 		public function hurt():void
 		{
+			isHurt = true;
 			if(this.currentFrame != 5) this.gotoAndStop(5);
 		}
 	}
