@@ -1,6 +1,11 @@
 package
 {
+<<<<<<< HEAD
 	import flash.events.Event;
+=======
+	import com.greensock.TweenMax;
+	
+>>>>>>> d3eee7307be9f7c69d00cb145bfbe17ea0a26e25
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.media.SoundTransform;
@@ -38,6 +43,7 @@ package
 		}
 		public static function playMovingMusic():void	
 		{
+<<<<<<< HEAD
 			_musicMovingChannel.soundTransform = new SoundTransform();
 		}
 		public static function fadeOutMovingMusic():void	
@@ -49,6 +55,13 @@ package
 		{
 			var movingMusic:Sound = new MovingMusic();
 			_musicMovingChannel = movingMusic.play(_musicStaticChannel.position,int.MAX_VALUE,new SoundTransform(0));
+=======
+			TweenMax.to(_musicMovingChannel, 1, {volume: 1});
+		}
+		public static function fadeOutMovingMusic():void	
+		{
+			TweenMax.to(_musicMovingChannel, 1, {volume: 0});
+>>>>>>> d3eee7307be9f7c69d00cb145bfbe17ea0a26e25
 		}
 	}
 }
