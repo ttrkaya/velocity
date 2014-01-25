@@ -290,6 +290,7 @@ package levels
 					|| avatarEndContactList.contact.GetFixtureB() == _endBody.GetFixtureList())
 				{
 					_avatarView.nirvana();
+					SoundManager.syncMusic();
 				}
 			}
 			
