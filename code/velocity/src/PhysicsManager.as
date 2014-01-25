@@ -40,7 +40,7 @@ package
 			debugDrawer.SetFillAlpha(0.1);
 			debugDrawer.SetFlags(b2DebugDraw.e_shapeBit);
 			_world.SetDebugDraw(debugDrawer);
-			//_debugSpriteContainer.addChild(_debugSprite);
+			_debugSpriteContainer.addChild(_debugSprite);
 		}
 		
 		public function update(dt:Number):void

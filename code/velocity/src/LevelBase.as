@@ -4,11 +4,16 @@ package
 
 	public class LevelBase extends Sprite
 	{
-		private var _physicsManager:PhysicsManager;
+		protected var _physicsManager:PhysicsManager;
 		
 		public function LevelBase()
 		{
 			_physicsManager = new PhysicsManager();
+		}
+		
+		public function update(dt:Number):void
+		{
+			_physicsManager.update(dt);
 		}
 	}
 }

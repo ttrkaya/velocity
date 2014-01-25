@@ -8,6 +8,8 @@ package
 	{
 		private var _level:LevelBase;
 		
+		private var _lastUpdateTime:Number;
+		
 		public static var stage:Stage;
 		
 		public function Main()
@@ -23,6 +25,23 @@ package
 			
 			_level = new Level1();
 			this.addChild(_level);
+			
+			_lastUpdateTime = getNow();
+			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+		}
+		
+		private function onEnterFrame(e:Event):void
+		{
+			var now:Number = getNow();
+			var dt:Number = now - _lastUpdateTime;
+			_lastUpdateTime = now;
+			
+			_level.update(dt);
+		}
+		
+		private function getNow():Number
+		{
+			return (new Date()).time / 1000;
 		}
 	}
 }

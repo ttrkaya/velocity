@@ -5,6 +5,8 @@ package
 		public function Level1()
 		{
 			super();
+			
+			_physicsManager.createDynamicCircle(50, 50, 30);
 		}
 	}
 }
