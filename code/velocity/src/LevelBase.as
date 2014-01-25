@@ -23,6 +23,9 @@ package
 		protected var _avatarFootBody:b2Body;
 		protected var _avatarView:MovieClip;
 		
+		protected var _endBody:b2Body;
+		protected var _endView:MovieClip;
+		
 		protected var _staticPlatformBodies:Vector.<b2Body>;
 		protected var _staticPlatformViews:Vector.<MovieClip>;
 		protected var _staticAlpha:Number;
@@ -88,6 +91,16 @@ package
 			_avatarView.width = C.PLAYER_W;
 			_avatarView.height = C.PLAYER_H;
 			_camera.addChild(_avatarView);
+			
+			var endPos:Point = parser.endPoint.startingPosition;
+			_endBody = _physicsManager.createStaticCircle(endPos.x, endPos.y, 5);
+			_endView = new MovingPlatform();
+			_endView.alpha = 0.5;
+			_endView.x = endPos.x;
+			_endView.y = endPos.y;
+			_endView.width = 5;
+			_endView.height = 5;
+			_camera.addChild(_endView);
 			
 			var staticPlatformDefs:Vector.<ShapeDefinition> = parser.staticPlatforms;
 			for(i=0; i<staticPlatformDefs.length; i++)
@@ -222,6 +235,17 @@ package
 							_avatarView.alpha = 0.2;
 						}
 					}
+				}
+			}
+			
+			for(var avatarEndContactList:b2ContactEdge = _avatarBody.GetContactList();
+				avatarEndContactList != null;
+				avatarEndContactList = avatarEndContactList.next)
+			{
+				if(avatarEndContactList.contact.GetFixtureA() == _endBody.GetFixtureList()
+					|| avatarEndContactList.contact.GetFixtureB() == _endBody.GetFixtureList())
+				{
+					_avatarView.alpha = 0;
 				}
 			}
 			
