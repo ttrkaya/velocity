@@ -423,6 +423,7 @@ package levels
 				_isBgMoving = _avatarView.currentFrame != 1;
 			}
 			_bgStatic.alpha = _isBgMoving ? 0 : 1;
+			if(_avatarView.isInNirvana) _bgStatic.alpha = 1;
 			
 			if (_isBgMoving)
 				SoundManager.playMovingMusic();
