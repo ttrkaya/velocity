@@ -11,19 +11,11 @@ package
 		{
 			super();
 			parse(0);
-			
-			_avatarBody = _physicsManager.createDynamicCircle(50, 50, 30);
 		}
 		
 		public override function update(dt:Number):void
 		{	
-			if(PlayerInput.right)
-			{
-				var f:b2Vec2 = new b2Vec2(5,0);
-				_avatarBody.ApplyForce(f,_avatarBody.GetWorldCenter());
-			}
-			
-			_physicsManager.update(dt);
+			baseUpdate(dt);
 			
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
