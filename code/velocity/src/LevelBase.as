@@ -201,7 +201,18 @@ package
 				for(i=0; i<_staticEnemyBodies.length; i++)
 				{
 					if(avatarContactList.contact.GetFixtureA() == _staticEnemyBodies[i].GetFixtureList()
-					|| avatarContactList.contact.GetFixtureB() == _staticEnemyBodies[i].GetFixtureList())
+						|| avatarContactList.contact.GetFixtureB() == _staticEnemyBodies[i].GetFixtureList())
+					{
+						if(avatarContactList.contact.IsTouching())
+						{
+							_avatarView.alpha = 0.2;
+						}
+					}
+				}
+				for(i=0; i<_movingEnemyBodies.length; i++)
+				{
+					if(avatarContactList.contact.GetFixtureA() == _movingEnemyBodies[i].GetFixtureList()
+						|| avatarContactList.contact.GetFixtureB() == _movingEnemyBodies[i].GetFixtureList())
 					{
 						if(avatarContactList.contact.IsTouching())
 						{
@@ -211,34 +222,62 @@ package
 				}
 			}
 			
-			
 			for(i=0; i<_movingPlatformBodies.length; i++)
 			{
-				var ratio:Number = _movingPlatformMoveRatios[i];
-				ratio += dt * 0.2;
-				if(ratio > 1) ratio -= 1;
-				var movedToPos:Point = new Point();
-				if(ratio < 0.5) 
+				var platformRatio:Number = _movingPlatformMoveRatios[i];
+				platformRatio += dt * 0.2;
+				if(platformRatio > 1) platformRatio -= 1;
+				var platformTarget:Point = new Point();
+				if(platformRatio < 0.5) 
 				{
-					movedToPos.x = _movingPlatformStartingPoints[i].x + 
-						ratio * 2 * (_movingPlatformEndPoints[i].x - _movingPlatformStartingPoints[i].x);
-					movedToPos.y = _movingPlatformStartingPoints[i].y +
-						ratio * 2 * (_movingPlatformEndPoints[i].y - _movingPlatformStartingPoints[i].y);
+					platformTarget.x = _movingPlatformStartingPoints[i].x + 
+						platformRatio * 2 * (_movingPlatformEndPoints[i].x - _movingPlatformStartingPoints[i].x);
+					platformTarget.y = _movingPlatformStartingPoints[i].y +
+						platformRatio * 2 * (_movingPlatformEndPoints[i].y - _movingPlatformStartingPoints[i].y);
 				}
 				else
 				{
-					movedToPos.x = _movingPlatformStartingPoints[i].x +
-						(1-ratio) * 2 * (_movingPlatformEndPoints[i].x - _movingPlatformStartingPoints[i].x);
-					movedToPos.y = _movingPlatformStartingPoints[i].y +
-						(1-ratio) * 2 * (_movingPlatformEndPoints[i].y - _movingPlatformStartingPoints[i].y);
+					platformTarget.x = _movingPlatformStartingPoints[i].x +
+						(1-platformRatio) * 2 * (_movingPlatformEndPoints[i].x - _movingPlatformStartingPoints[i].x);
+					platformTarget.y = _movingPlatformStartingPoints[i].y +
+						(1-platformRatio) * 2 * (_movingPlatformEndPoints[i].y - _movingPlatformStartingPoints[i].y);
 				}
-				_movingPlatformMoveRatios[i] = ratio;
+				_movingPlatformMoveRatios[i] = platformRatio;
 				_movingPlatformBodies[i].SetLinearVelocity(new b2Vec2(
-					(movedToPos.x/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().x) / dt,
-					(movedToPos.y/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().y) / dt));
+					(platformTarget.x/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().x) / dt,
+					(platformTarget.y/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().y) / dt));
 				
 				_movingPlatformViews[i].x = _movingPlatformBodies[i].GetPosition().x * PhysicsManager.RATIO;
 				_movingPlatformViews[i].y = _movingPlatformBodies[i].GetPosition().y * PhysicsManager.RATIO;
+			}
+			
+			for(i=0; i<_movingEnemyBodies.length; i++)
+			{
+				var enemyRatio:Number = _movingEnemyMoveRatios[i];
+				enemyRatio += dt * 0.2;
+				if(enemyRatio > 1) enemyRatio -= 1;
+				var enemyTarget:Point = new Point();
+				if(enemyRatio < 0.5) 
+				{
+					enemyTarget.x = _movingEnemyStartingPoints[i].x + 
+						enemyRatio * 2 * (_movingEnemyEndPoints[i].x - _movingEnemyStartingPoints[i].x);
+					enemyTarget.y = _movingEnemyStartingPoints[i].y +
+						enemyRatio * 2 * (_movingEnemyEndPoints[i].y - _movingEnemyStartingPoints[i].y);
+				}
+				else
+				{
+					enemyTarget.x = _movingEnemyStartingPoints[i].x +
+						(1-enemyRatio) * 2 * (_movingEnemyEndPoints[i].x - _movingEnemyStartingPoints[i].x);
+					enemyTarget.y = _movingEnemyStartingPoints[i].y +
+						(1-enemyRatio) * 2 * (_movingEnemyEndPoints[i].y - _movingEnemyStartingPoints[i].y);
+				}
+				_movingEnemyMoveRatios[i] = enemyRatio;
+				_movingEnemyBodies[i].SetLinearVelocity(new b2Vec2(
+					(enemyTarget.x/PhysicsManager.RATIO - _movingEnemyBodies[i].GetPosition().x) / dt,
+					(enemyTarget.y/PhysicsManager.RATIO - _movingEnemyBodies[i].GetPosition().y) / dt));
+				
+				_movingEnemyViews[i].x = _movingEnemyBodies[i].GetPosition().x * PhysicsManager.RATIO;
+				_movingEnemyViews[i].y = _movingEnemyBodies[i].GetPosition().y * PhysicsManager.RATIO;
 			}
 			
 			var cameraTarget:Number = 400 - _avatarView.x;
