@@ -79,6 +79,7 @@ package
 				{
 					_currentLevel++;
 					this.removeChild(_level);
+					_level.destroy();
 					_level = new Level1(_currentLevel);
 					this.addChild(_level);
 				}
@@ -89,6 +90,7 @@ package
 				{
 					_currentLevel--;
 					this.removeChild(_level);
+					_level.destroy();
 					_level = new Level1(_currentLevel);
 					this.addChild(_level);
 				}

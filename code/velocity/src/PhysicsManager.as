@@ -43,6 +43,11 @@ package
 			_debugSpriteContainer.addChild(_debugSprite);
 		}
 		
+		public function destroy():void
+		{
+			_debugSpriteContainer.removeChild(_debugSprite);
+		}
+		
 		public function update(dt:Number):void
 		{
 			_world.Step(dt,10,10);

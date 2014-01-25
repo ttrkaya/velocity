@@ -55,6 +55,7 @@ package parse
 					_endPoint = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation);
 				else if (el is Waypoint)
 					_waypoints.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setId(el.id));
+				el.rotation = rotation;
 			}
 			for each (var waypoint:ShapeDefinition in waypoints)
 			{ //add the waypoints to the moving elements
