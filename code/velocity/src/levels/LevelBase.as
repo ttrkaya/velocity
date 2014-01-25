@@ -183,7 +183,7 @@ package levels
 					staticEnemyDef.startingPosition.x, staticEnemyDef.startingPosition.y, staticEnemyDef.width/2);
 				_staticEnemyBodies.push(staticEnemyBody);
 				
-				var staticEnemyView:MovieClip = new EnemyView();
+				var staticEnemyView:MovieClip = new GhostView();
 				staticEnemyView.width = staticEnemyDef.width;
 				staticEnemyView.height = staticEnemyDef.height;
 				staticEnemyView.x = staticEnemyDef.startingPosition.x;
@@ -200,7 +200,7 @@ package levels
 					movingEnemyDef.startingPosition.x, movingEnemyDef.startingPosition.y, 
 					movingEnemyDef.width/2, movingEnemyDef.height/2, movingEnemyDef.rotation*Math.PI/180);
 				_movingEnemyBodies.push(movingEnemyBody);
-				var movingEnemyView:MovieClip = new EnemyView();
+				var movingEnemyView:MovieClip = new GhostView();
 				movingEnemyView.x = movingEnemyDef.startingPosition.x;
 				movingEnemyView.y = movingEnemyDef.startingPosition.y;
 				movingEnemyView.width = movingEnemyDef.width;
