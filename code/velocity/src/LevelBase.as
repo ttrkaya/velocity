@@ -35,6 +35,12 @@ package
 		protected var _staticEnemyBodies:Vector.<b2Body>;
 		protected var _staticEnemyViews:Vector.<MovieClip>;
 		
+		protected var _movingEnemyBodies:Vector.<b2Body>;
+		protected var _movingEnemyViews:Vector.<MovieClip>;
+		protected var _movingEnemyStartingPoints:Vector.<Point>;
+		protected var _movingEnemyEndPoints:Vector.<Point>;
+		protected var _movingEnemyMoveRatios:Vector.<Number>;
+		
 		public function LevelBase()
 		{
 			_camera = new Sprite();
@@ -53,6 +59,8 @@ package
 			
 			_staticEnemyBodies = new Vector.<b2Body>;
 			_staticEnemyViews = new Vector.<MovieClip>;
+			
+			
 		}
 		
 		protected function parse(levelId:int):void
