@@ -4,7 +4,7 @@ package
 	{
 		public static const PLAYER_W:Number = 30;
 		public static const PLAYER_H:Number = 50;
-		public static const PLAYER_FORCE_HOR:Number = 30;
-		public static const PLAYER_FORCE_JUMP:Number = 240;
+		public static const PLAYER_FORCE_HOR:Number = 50;
+		public static const PLAYER_FORCE_JUMP:Number = 700;
 	}
 }

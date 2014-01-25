@@ -52,35 +52,36 @@ package
 			try{_debugSpriteContainer.setChildIndex(_debugSprite,_debugSpriteContainer.numChildren-1);}catch(e:Error){}
 		}
 		
-//		public function createPlayer():b2Body
-//		{
-//			var bodyDef:b2BodyDef = new b2BodyDef();
-//			bodyDef.position.Set(0,0);
-//			
-//			var shape:b2PolygonShape = new b2PolygonShape();
-//			shape.SetAsBox(C.PLAYER_W*0.5/RATIO, C.PLAYER_H*0.5/RATIO);
-//			
-//			var fixDef:b2FixtureDef = new b2FixtureDef();
-//			fixDef.shape = shape;
-//			fixDef.density = 1;
-//			fixDef.friction = 0.1;
-//			fixDef.restitution = 0.2;
-//			
-//			var circleShape:b2CircleShape = new b2CircleShape(C.PLAYER_W*0.55/RATIO);
-//			var circleFixDef:b2FixtureDef = new b2FixtureDef();
-//			circleFixDef.shape = circleShape;
-//			circleFixDef.density = 1;
-//			circleFixDef.friction = 0.1;
-//			circleFixDef.restitution = 0.2;
-//			
-//			var body:b2Body = _world.CreateBody(bodyDef);
-//			body.CreateFixture(fixDef);
-//			body.CreateFixture(circleFixDef);
-//			body.ResetMassData();
-//			body.SetType(b2Body.b2_dynamicBody);
-//			
-//			return body;
-//		}
+		public function createPlayer():b2Body
+		{
+			var bodyDef:b2BodyDef = new b2BodyDef();
+			bodyDef.position.Set(0,0);
+			
+			var shape:b2PolygonShape = new b2PolygonShape();
+			shape.SetAsBox(C.PLAYER_W*0.5/RATIO, C.PLAYER_H*0.5/RATIO);
+			
+			var fixDef:b2FixtureDef = new b2FixtureDef();
+			fixDef.shape = shape;
+			fixDef.density = 1;
+			fixDef.friction = 0.3;
+			fixDef.restitution = 0.2;
+			
+			var circleShape:b2CircleShape = new b2CircleShape(C.PLAYER_W*0.6/RATIO);
+			circleShape.SetLocalPosition(new b2Vec2(0, C.PLAYER_H*0.3/PhysicsManager.RATIO));
+			var circleFixDef:b2FixtureDef = new b2FixtureDef();
+			circleFixDef.shape = circleShape;
+			circleFixDef.density = 1;
+			circleFixDef.friction = 0.1;
+			circleFixDef.restitution = 0.2;
+			
+			var body:b2Body = _world.CreateBody(bodyDef);
+			body.CreateFixture(fixDef);
+			body.CreateFixture(circleFixDef);
+			body.ResetMassData();
+			body.SetType(b2Body.b2_dynamicBody);
+			
+			return body;
+		}
 		
 		public function createDynamicRectangle(centerX:Number,centerY:Number,halfWidth:Number,halfHeight:Number,angle:Number=0,density:Number=1,friction:Number=0.1,restitution:Number=0.2):b2Body
 		{

@@ -57,9 +57,10 @@ package
 			parser.setLevel(levelId);
 			
 			var playerPos:Point = parser.player.startingPosition;
-			_avatarBody = _physicsManager.createDynamicRectangle(playerPos.x ,playerPos.y, C.PLAYER_W/2, C.PLAYER_H/2);
+			_avatarBody = _physicsManager.createPlayer();
+				//_physicsManager.createDynamicRectangle(playerPos.x ,playerPos.y, C.PLAYER_W/2, C.PLAYER_H/2);
 			_avatarBody.SetFixedRotation(true);
-			_avatarBody.SetLinearDamping(1);
+			_avatarBody.SetLinearDamping(1.5);
 			_avatarFootBody = _physicsManager.createDynamicCircle(0, 0, C.PLAYER_W*0.45);
 			_avatarFootBody.GetFixtureList().SetSensor(true);
 			_avatarView = new AvatarView();
@@ -117,7 +118,7 @@ package
 			
 			var isAvatarOnGround:Boolean = this.isPlayerOnGround();
 			_avatarFootBody.SetPosition(new b2Vec2(_avatarBody.GetPosition().x, 
-												_avatarBody.GetPosition().y + C.PLAYER_H * 0.4 / PhysicsManager.RATIO));
+												_avatarBody.GetPosition().y + C.PLAYER_H * 0.5 / PhysicsManager.RATIO));
 			_avatarFootBody.SetLinearVelocity(new b2Vec2());
 			
 			var playerForceX:Number = 0;
