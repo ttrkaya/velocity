@@ -142,7 +142,7 @@ package
 			for(i=0; i<_movingPlatformBodies.length; i++)
 			{
 				var ratio:Number = _movingPlatformMoveRatios[i];
-				ratio += dt;
+				ratio += dt * 0.2;
 				if(ratio > 1) ratio -= 1;
 				var movedToPos:Point = new Point();
 				if(ratio < 0.5) 
@@ -168,7 +168,8 @@ package
 				_movingPlatformViews[i].y = _movingPlatformBodies[i].GetPosition().y * PhysicsManager.RATIO;
 			}
 			
-			_camera.x = 400 - _avatarView.x;
+			var cameraTarget:Number = 400 - _avatarView.x;
+			_camera.x += (cameraTarget - _camera.x) * 3 * dt;
 			if(_camera.x > 0) _camera.x = 0;
 			//_camera.y = 100 - _avatarView.y;
 		}
