@@ -13,6 +13,8 @@ package
 	
 	import parse.Parser;
 	import parse.ShapeDefinition;
+	
+	import view.MonkViewPlus;
 
 	public class LevelBase extends Sprite
 	{
@@ -21,7 +23,7 @@ package
 		
 		protected var _avatarBody:b2Body;
 		protected var _avatarFootBody:b2Body;
-		protected var _avatarView:MovieClip;
+		protected var _avatarView:MonkViewPlus;
 		protected var _jumpWaitTime:Number;
 		
 		protected var _endBody:b2Body;
@@ -97,7 +99,9 @@ package
 			_avatarBody.SetLinearDamping(1.5);
 			_avatarFootBody = _physicsManager.createDynamicCircle(0, 0, C.PLAYER_W*0.45);
 			_avatarFootBody.GetFixtureList().SetSensor(true);
-			_avatarView = new AvatarView();
+			_avatarView = new MonkViewPlus();
+			_avatarView.stop();
+			_avatarView.idle();
 			_avatarView.width = C.PLAYER_W;
 			_avatarView.height = C.PLAYER_H;
 			_camera.addChild(_avatarView);
@@ -226,10 +230,6 @@ package
 					_avatarBody.ApplyImpulse(new b2Vec2(0,-C.PLAYER_FORCE_JUMP), _avatarBody.GetWorldCenter());
 				}
 			}
-			
-			
-			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
-			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
 			
 			for(var avatarContactList:b2ContactEdge = _avatarBody.GetContactList();
 				avatarContactList != null;
@@ -367,6 +367,35 @@ package
 				else if(movingEnemyAlphaTarget > 1.5) movingEnemyAlphaTarget = 1.5;
 				_movingEnemyViews[i].alpha += (movingEnemyAlphaTarget - _movingEnemyViews[i].alpha) * dt;
 			}
+			
+			var speedX:Number = _avatarBody.GetLinearVelocity().x;
+			if(speedX != 0) _avatarView.scaleX = (_avatarBody.GetLinearVelocity().x > 0) ? 1 : -1;
+			if(isAvatarOnGround)
+			{
+				if(!PlayerInput.left && !PlayerInput.right)
+				{
+					_avatarView.idle();
+				}
+				else
+				{
+					var absSpeed:Number = Math.abs(_avatarBody.GetLinearVelocity().x);
+					if(absSpeed < 5)
+					{
+						_avatarView.walk();
+					}
+					else
+					{
+						_avatarView.run();
+					}
+				}
+			}
+			else
+			{
+				_avatarView.jump();
+			}
+			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
+			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO + 10;
+			
 		}
 		
 		private function isPlayerOnGround():Boolean
