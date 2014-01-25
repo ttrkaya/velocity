@@ -61,6 +61,7 @@
     <element path="lib\Level01-v02.swc" />
     <element path="lib\Level01.swc" />
     <element path="lib\Level02.swc" />
+    <element path="lib\Level03.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

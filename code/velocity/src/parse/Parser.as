@@ -6,7 +6,7 @@ package parse
 	
 	public class Parser
 	{
-		private static const levelDefs:Vector.<MovieClip> = new <MovieClip>[new DefLevel1(), new DefLevel1()];
+		public static const levelDefs:Vector.<MovieClip> = new <MovieClip>[new DefLevel1(), new Level01(), new Level02(), new Level03()];
 		
 		private var _staticPlatforms:Vector.<ShapeDefinition>;
 		private var _movingPlatforms:Vector.<ShapeDefinition>;

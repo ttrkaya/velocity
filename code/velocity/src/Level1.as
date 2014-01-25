@@ -7,10 +7,10 @@ package
 	{
 		
 		
-		public function Level1()
+		public function Level1(levelID:int = 1)
 		{
 			super();
-			parse(1);
+			parse(levelID);
 		}
 		
 		public override function update(dt:Number):void
