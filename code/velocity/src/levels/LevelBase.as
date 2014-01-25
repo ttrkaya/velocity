@@ -50,6 +50,7 @@ package levels
 		
 		protected var _bgStatic:MovieClip;
 		protected var _bgMoving:MovieClip;
+		protected var _isBgMoving:Boolean;
 		
 		private static const MAX_JUMP_WAIT:Number = 0.6;
 		
@@ -58,6 +59,7 @@ package levels
 			_physicsManager = new PhysicsManager();
 			
 			_jumpWaitTime = 0;
+			_isBgMoving = false;
 			
 			_staticPlatformBodies = new Vector.<b2Body>;
 			_staticPlatformViews = new Vector.<MovieClip>;
@@ -84,7 +86,6 @@ package levels
 			this.addChild(_bgStatic);
 			_camera = new Sprite();
 			this.addChild(_camera);
-			
 		}
 		
 		public function destroy():void
@@ -409,6 +410,16 @@ package levels
 			
 			_bgStatic.alpha = (10 - absSpeedX) / 10;
 			_bgStatic.alpha = (_bgStatic.alpha < 0.7) ? 0 : 1;
+			
+			if(!isAvatarOnGround)
+			{
+				_isBgMoving = true;
+			}
+			else
+			{
+				_isBgMoving = _avatarView.currentFrame != 1;
+			}
+			_bgStatic.alpha = _isBgMoving ? 0 : 1;
 		}
 		
 		private function isPlayerOnGround():Boolean
