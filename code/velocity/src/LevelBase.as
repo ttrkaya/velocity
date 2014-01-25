@@ -102,7 +102,7 @@ package
 			_avatarView.height = C.PLAYER_H;
 			_camera.addChild(_avatarView);
 			
-			var endPos:Point = new Point();//parser.endPoint.startingPosition;
+			var endPos:Point = parser.endPoint.startingPosition;
 			_endBody = _physicsManager.createStaticCircle(endPos.x, endPos.y, 5);
 			_endView = new MovingPlatform();
 			_endView.alpha = 0.5;
