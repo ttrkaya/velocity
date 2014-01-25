@@ -7,7 +7,7 @@ package parse
 	 * @author Paul Brinkkemper
 	 */
 	
-	public var waypoint:ShapeDefinition;
+	public var waypoint:Point;
 	public var beginRatio:Number;
 	public var startingPosition:Point;
 	public var width:Number;
@@ -34,7 +34,7 @@ package parse
 			tag = _id;
 			ratio = _ratio;
 		}
-		public function addWayPoint (_wayPoint:ShapeDefinition):void
+		public function addWayPoint (_wayPoint:Point):void
 		{
 			waypoint = _wayPoint;
 		}
