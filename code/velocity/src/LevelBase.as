@@ -96,6 +96,8 @@ package
 		{
 			_physicsManager.update(dt);
 			
+			
+			
 			var playerForceX:Number = 0;
 			if(PlayerInput.right) playerForceX = C.PLAYER_FORCE_HOR;
 			else if(PlayerInput.left) playerForceX = -C.PLAYER_FORCE_HOR;
@@ -110,6 +112,11 @@ package
 			
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
+		}
+		
+		private function isPlayerOnGround():Boolean
+		{
+			return false;
 		}
 	}
 }
