@@ -49,8 +49,6 @@ package
 
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-			
-			SoundManager.playMusic();
 		}
 		
 		private function onEnterFrame(e:Event):void
