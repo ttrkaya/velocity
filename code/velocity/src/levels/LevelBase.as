@@ -425,7 +425,7 @@ package levels
 			_bgStatic.alpha = _isBgMoving ? 0 : 1;
 			if(_avatarView.isInNirvana) _bgStatic.alpha = 1;
 			
-			if (_isBgMoving)
+			if (_isBgMoving && !_avatarView.isInNirvana)
 				SoundManager.playMovingMusic();
 			else
 				SoundManager.fadeOutMovingMusic();
