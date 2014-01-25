@@ -59,7 +59,8 @@ package
 			var playerPos:Point = parser.player.startingPosition;
 			_avatarBody = _physicsManager.createDynamicRectangle(playerPos.x ,playerPos.y, C.PLAYER_W/2, C.PLAYER_H/2);
 			_avatarBody.SetFixedRotation(true);
-			_avatarFootBody = _physicsManager.createDynamicCircle(0, 0, C.PLAYER_W*0.6);
+			_avatarBody.SetLinearDamping(1);
+			_avatarFootBody = _physicsManager.createDynamicCircle(0, 0, C.PLAYER_W*0.45);
 			_avatarFootBody.GetFixtureList().SetSensor(true);
 			_avatarView = new AvatarView();
 			_avatarView.width = C.PLAYER_W;
@@ -116,7 +117,7 @@ package
 			
 			var isAvatarOnGround:Boolean = this.isPlayerOnGround();
 			_avatarFootBody.SetPosition(new b2Vec2(_avatarBody.GetPosition().x, 
-												_avatarBody.GetPosition().y + C.PLAYER_H * 0.3 / PhysicsManager.RATIO));
+												_avatarBody.GetPosition().y + C.PLAYER_H * 0.4 / PhysicsManager.RATIO));
 			_avatarFootBody.SetLinearVelocity(new b2Vec2());
 			
 			var playerForceX:Number = 0;
@@ -133,8 +134,8 @@ package
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO;
 			
-			_camera.x = 400 - _avatarView.x ;
-			if(_camera.x < 0) _camera.x = 0;
+			_camera.x = 400 - _avatarView.x;
+			if(_camera.x > 0) _camera.x = 0;
 			//_camera.y = 100 - _avatarView.y;
 		}
 		
