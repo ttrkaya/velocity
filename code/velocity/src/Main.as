@@ -11,7 +11,7 @@ package
 	public class Main extends Sprite
 	{
 		private var _level:LevelBase;
-		private var _currentLevel:int = 1;
+		private var _currentLevelId:int = 1;
 		
 		private var _lastUpdateTime:Number;
 		
@@ -28,7 +28,7 @@ package
 			
 			Main.stage = this.stage;
 			
-			_level = new Level1(_currentLevel);
+			_level = new Level1(_currentLevelId);
 			this.addChild(_level);
 
 			
@@ -75,23 +75,23 @@ package
 			}
 			if(e.keyCode == Keyboard.O)
 			{
-				if (_currentLevel < Parser.levelDefs.length - 1)
+				if (_currentLevelId < Parser.levelDefs.length - 1)
 				{
-					_currentLevel++;
+					_currentLevelId++;
 					this.removeChild(_level);
 					_level.destroy();
-					_level = new Level1(_currentLevel);
+					_level = new Level1(_currentLevelId);
 					this.addChild(_level);
 				}
 			}
 			if(e.keyCode == Keyboard.P)
 			{
-				if (_currentLevel > 0)
+				if (_currentLevelId > 0)
 				{
-					_currentLevel--;
+					_currentLevelId--;
 					this.removeChild(_level);
 					_level.destroy();
-					_level = new Level1(_currentLevel);
+					_level = new Level1(_currentLevelId);
 					this.addChild(_level);
 				}
 			}
