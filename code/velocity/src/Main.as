@@ -8,6 +8,7 @@
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	
+	import levels.Level0;
 	import levels.Level1;
 	import levels.Level2;
 	import levels.Level3;
@@ -26,7 +27,7 @@
 		
 		public static var stage:Stage;
 		
-		private static const levelClasses:Vector.<Class> = new <Class>[Level1, Level2, Level3, Level4];
+		private static const levelClasses:Vector.<Class> = new <Class>[Level0, Level1, Level2, Level3, Level4];
 		
 		public function Main()
 		{

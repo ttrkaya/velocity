@@ -46,7 +46,7 @@ package levels
 			//_camera.setChildIndex(_avatarView, _camera.numChildren-1);
 			
 			super(main);
-			parseLevelFromSwcWithID(0);
+			parseLevelFromSwcWithID(1);
 			
 			for(var i:int=0; i<_staticPlatformViews.length; i++)
 			{

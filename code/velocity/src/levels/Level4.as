@@ -11,7 +11,7 @@ package levels
 		public function Level4(main:Main)
 		{
 			super(main);
-			parseLevelFromSwcWithID(3);
+			parseLevelFromSwcWithID(4);
 		}
 		
 		public override function update(dt:Number):void
