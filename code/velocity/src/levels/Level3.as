@@ -10,7 +10,7 @@ package levels
 		public function Level3(main:Main)
 		{
 			super(main);
-			parse(2);
+			parseLevelFromSwcWithID(2);
 		}
 		
 		public override function update(dt:Number):void

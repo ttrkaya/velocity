@@ -1,4 +1,4 @@
-package
+﻿package
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -30,6 +30,7 @@ package
 		
 		public function Main()
 		{
+			trace('titties galore');
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		

@@ -27,6 +27,11 @@ package parse
 		
 		public function setLevel(levelId:int):void
 		{
+			var level:MovieClip = levelDefs[levelId];
+			loadLevel(level);
+		}
+		public function loadLevel(level:MovieClip):void
+		{
 			_staticEnemies = new Vector.<ShapeDefinition>();
 			_staticPlatforms = new Vector.<ShapeDefinition>();
 			_movingEnemies = new Vector.<ShapeDefinition>();
@@ -34,7 +39,6 @@ package parse
 			_flyingEnemies = new Vector.<ShapeDefinition>();
 			_waypoints = new Vector.<ShapeDefinition>();
 			
-			var level:MovieClip = levelDefs[levelId];
 			
 			for (var i:uint = 0; i < level.numChildren; i++)
 			{ //populate the vectors

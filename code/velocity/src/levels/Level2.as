@@ -12,7 +12,7 @@ package levels
 		public function Level2(main:Main)
 		{
 			super(main);
-			parse(1);
+			parseLevelFromSwcWithID(1);
 			
 			for(var i:int=0; i<_staticPlatformViews.length; i++)
 			{

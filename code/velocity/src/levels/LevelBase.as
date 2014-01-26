@@ -58,6 +58,8 @@ package levels
 		protected var _hasBeenHurtTime:Number;
 		protected var _hasBeenInNirvanaTime:Number;
 		
+		protected var parser:Parser;
+		
 		private static const MAX_JUMP_WAIT:Number = 0.6;
 		private static const HURT_WAIT_TIME:Number = 1.2;
 		private static const NIRVANA_WAIT_TIME:Number = 4.5;
@@ -105,13 +107,22 @@ package levels
 		{
 			_physicsManager.destroy();
 		}
+		protected function parseLevelFromSwcWithID(levelId:int):void
+		{
+			parser = new Parser();
+			parser.setLevel(levelId);	
+			parse();
+		}
+		protected function parseLevelFromMovieClip(movieClip:MovieClip):void
+		{
+			parser = new Parser();
+			parser.loadLevel(movieClip);	
+			parse();
+		}
 		
-		protected function parse(levelId:int):void
+		protected function parse():void
 		{
 			var i:int;
-			
-			var parser:Parser = new Parser();
-			parser.setLevel(levelId);
 			
 			var playerPos:Point = parser.player.startingPosition;
 			_avatarBody = _physicsManager.createPlayer(playerPos.x ,playerPos.y);
