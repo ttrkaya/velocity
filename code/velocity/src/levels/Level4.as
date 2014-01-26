@@ -12,6 +12,23 @@ package levels
 		{
 			super(main);
 			parseLevelFromSwcWithID(4);
+			
+			for(var i:int=0; i<_staticPlatformViews.length; i++)
+			{
+				_camera.removeChild(_staticPlatformViews[i]);
+			}
+			
+			_bgMoving = new BackGroundMoving4();
+			this.addChild(_bgMoving);
+			_bgStatic = new BackGroundStatic4();
+			this.addChild(_bgStatic);
+			
+			this.setChildIndex(_camera, this.numChildren-1);
+			_platformsView = new LevelOverlay4();
+			_camera.addChild(_platformsView);
+			_foreGround = new ForeGroundMoving4();
+			_camera.addChild(_foreGround);
+			_camera.setChildIndex(_avatarView, _camera.numChildren-1);
 		}
 		
 		public override function update(dt:Number):void
