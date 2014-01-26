@@ -39,6 +39,7 @@ package levels
 		protected var _movingPlatformStartingPoints:Vector.<Point>;
 		protected var _movingPlatformEndPoints:Vector.<Point>;
 		protected var _movingPlatformMoveRatios:Vector.<Number>;
+		protected var _movingPlatformSpeeds:Vector.<Number>;
 		
 		protected var _staticEnemyBodies:Vector.<b2Body>;
 		protected var _staticEnemyViews:Vector.<MovieClip>;
@@ -48,6 +49,7 @@ package levels
 		protected var _movingEnemyStartingPoints:Vector.<Point>;
 		protected var _movingEnemyEndPoints:Vector.<Point>;
 		protected var _movingEnemyMoveRatios:Vector.<Number>;
+		protected var _movingEnemySpeeds:Vector.<Number>;
 		
 		protected var _bgStatic:MovieClip;
 		protected var _bgMoving:MovieClip;
@@ -85,6 +87,7 @@ package levels
 			_movingPlatformStartingPoints = new Vector.<Point>;
 			_movingPlatformEndPoints = new Vector.<Point>;
 			_movingPlatformMoveRatios = new Vector.<Number>;
+			_movingPlatformSpeeds = new Vector.<Number>;
 			
 			_staticEnemyBodies = new Vector.<b2Body>;
 			_staticEnemyViews = new Vector.<MovieClip>;
@@ -94,6 +97,7 @@ package levels
 			_movingEnemyStartingPoints = new Vector.<Point>;
 			_movingEnemyEndPoints = new Vector.<Point>;
 			_movingEnemyMoveRatios = new Vector.<Number>;
+			_movingEnemySpeeds = new Vector.<Number>;
 			
 			_camera = new Sprite();
 			this.addChild(_camera);
@@ -175,6 +179,7 @@ package levels
 				_movingPlatformStartingPoints.push(movingPlatformDef.startingPosition);
 				_movingPlatformEndPoints.push(movingPlatformDef.waypoint);
 				_movingPlatformMoveRatios.push(movingPlatformDef.beginRatio);
+				_movingPlatformSpeeds.push(movingPlatformDef.speed);
 			}
 			
 			var staticEnemyDefs:Vector.<ShapeDefinition> = parser.staticEnemies;
@@ -205,14 +210,15 @@ package levels
 				var movingEnemyView:MovieClip = new GhostView();
 				movingEnemyView.x = movingEnemyDef.startingPosition.x;
 				movingEnemyView.y = movingEnemyDef.startingPosition.y;
-				movingEnemyView.width = movingEnemyDef.width;
-				movingEnemyView.height = movingEnemyDef.height;
-				movingEnemyView.rotation = movingEnemyDef.rotation;
+				movingEnemyView.width = movingEnemyDef.width * 2;
+				movingEnemyView.height = movingEnemyDef.height * 2;
+				movingEnemyView.rotation = movingEnemyDef.rotation ;
 				_movingEnemyViews.push(movingEnemyView);
 				_camera.addChild(movingEnemyView);
 				_movingEnemyStartingPoints.push(movingEnemyDef.startingPosition);
 				_movingEnemyEndPoints.push(movingEnemyDef.waypoint);
 				_movingEnemyMoveRatios.push(movingEnemyDef.beginRatio);
+				_movingEnemySpeeds.push(movingEnemyDef.speed);
 			}
 		}
 		
@@ -300,7 +306,7 @@ package levels
 			for(i=0; i<_movingPlatformBodies.length; i++)
 			{
 				var platformRatio:Number = _movingPlatformMoveRatios[i];
-				platformRatio += dt * 0.2;
+				platformRatio += dt * _movingPlatformSpeeds[i];
 				if(platformRatio > 1) platformRatio -= 1;
 				var platformTarget:Point = new Point();
 				if(platformRatio < 0.5) 
@@ -329,7 +335,7 @@ package levels
 			for(i=0; i<_movingEnemyBodies.length; i++)
 			{
 				var enemyRatio:Number = _movingEnemyMoveRatios[i];
-				enemyRatio += dt * 0.2;
+				enemyRatio += dt * _movingEnemySpeeds[i];
 				if(enemyRatio > 1) enemyRatio -= 1;
 				var enemyTarget:Point = new Point();
 				if(enemyRatio < 0.5) 
