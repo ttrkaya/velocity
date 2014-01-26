@@ -29,7 +29,6 @@ package levels
 		protected var _jumpWaitTime:Number;
 		
 		protected var _endBody:b2Body;
-		protected var _endView:MovieClip;
 		
 		protected var _staticPlatformBodies:Vector.<b2Body>;
 		protected var _staticPlatformViews:Vector.<MovieClip>;
@@ -137,13 +136,7 @@ package levels
 			
 			var endPos:Point = parser.endPoint.startingPosition;
 			_endBody = _physicsManager.createStaticCircle(endPos.x, endPos.y, 5);
-			_endView = new MovingPlatform();
-			_endView.alpha = 0.5;
-			_endView.x = endPos.x;
-			_endView.y = endPos.y;
-			_endView.width = 5;
-			_endView.height = 5;
-			_camera.addChild(_endView);
+			_endBody.GetFixtureList().SetSensor(true);
 			
 			var staticPlatformDefs:Vector.<ShapeDefinition> = parser.staticPlatforms;
 			for(i=0; i<staticPlatformDefs.length; i++)
