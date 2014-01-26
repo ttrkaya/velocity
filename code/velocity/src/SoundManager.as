@@ -35,6 +35,8 @@ package
 		
 		public static function playMusic():void
 		{
+			return;
+			
 			var staticMusic:Sound = new StaticMusic();
 			_musicStaticChannel = staticMusic.play(0, 0, new SoundTransform(1));
 			
