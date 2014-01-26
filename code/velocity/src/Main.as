@@ -1,5 +1,6 @@
 ﻿package
 {
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageAlign;
@@ -8,12 +9,7 @@
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	
-	import levels.Level0;
-	import levels.Level1;
-	import levels.Level2;
-	import levels.Level3;
-	import levels.Level4;
-	import levels.LevelBase;
+	import levels.*;
 	
 	import parse.Parser;
 	
@@ -25,9 +21,11 @@
 		
 		private var _lastUpdateTime:Number;
 		
+		private var _edgeShades:Shape;
+		
 		public static var stage:Stage;
 		
-		private static const levelClasses:Vector.<Class> = new <Class>[Level0, Level1, Level2, Level3, Level4];
+		private static const levelClasses:Vector.<Class> = new <Class>[Level0, Level1, Level2, Level3, Level4, Level5];
 		
 		public function Main()
 		{
@@ -45,6 +43,14 @@
 			
 			_level = new levelClasses[_currentLevelId](this);
 			this.addChild(_level);
+			
+			_edgeShades = new Shape();
+			_edgeShades.graphics.beginFill(0);
+			_edgeShades.graphics.drawRect(-1000,-1000,1000,3000);
+			_edgeShades.graphics.drawRect(800,-1000,1000,3000);
+			_edgeShades.graphics.drawRect(-1000,-1000,3000,1000);
+			_edgeShades.graphics.drawRect(-1000,600,3000,1000);
+			this.addChild(_edgeShades);
 
 			_lastUpdateTime = getNow();
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
@@ -95,7 +101,7 @@
 			}
 			if(e.keyCode == Keyboard.O)
 			{
-				if (_currentLevelId < Parser.levelDefs.length - 1)
+				if (_currentLevelId < Parser.levelDefs.length-1)
 				{
 					_currentLevelId++;
 					this.restart();
@@ -136,6 +142,7 @@
 			_level.destroy();
 			_level = new levelClasses[_currentLevelId](this);
 			this.addChild(_level);
+			this.setChildIndex(_edgeShades, this.numChildren-1);
 		}
 		
 		public function advanceLevel():void

@@ -364,13 +364,6 @@ package levels
 				if (dist < GHOST_PASSING_SOUND_DISTANCE)
 					SoundManager.playGhostSound();
 			}
-			
-			var cameraTarget:Number = 400 - _avatarView.x;
-			_camera.x += (cameraTarget - _camera.x) * 3 * dt;
-			if(_camera.x > 0) _camera.x = 0;
-			var rightLimit:Number = -_platformsView.width + 800;
-			if(_camera.x < rightLimit) _camera.x = rightLimit;
-			_bgMoving.x = _bgStatic.x = _camera.x / 3;
 
 			const staticAlphaRatio:Number = 5;
 			var staticAlphaTarget:Number = (staticAlphaRatio - _avatarBody.GetLinearVelocity().LengthSquared()) / staticAlphaRatio;
@@ -430,6 +423,19 @@ package levels
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO + 10;
 			
+			var cameraTarget:Number = 400 - _avatarView.x;
+			_camera.x += (cameraTarget - _camera.x) * 3 * dt;
+			if(_camera.x > 0) _camera.x = 0;
+			if(_platformsView)
+			{
+				var rightLimit:Number = -_platformsView.width + 800;
+				if(_camera.x < rightLimit) _camera.x = rightLimit;
+				_bgMoving.x = _bgStatic.x = _camera.x / 3;
+				
+				_platformsView.alpha = _staticAlpha;
+				_foreGround.alpha = 1 - _platformsView.alpha;
+			}
+			
 			if(!isAvatarOnGround)
 			{
 				_isBgMoving = true;
@@ -438,11 +444,11 @@ package levels
 			{
 				_isBgMoving = _avatarView.currentFrame != 1;
 			}
-			_bgStatic.alpha = _isBgMoving ? 0 : 1;
-			if(_avatarView.isInNirvana) _bgStatic.alpha = 1;
-			
-			_platformsView.alpha = _staticAlpha;
-			_foreGround.alpha = 1 - _platformsView.alpha;
+			if(_bgStatic)
+			{
+				_bgStatic.alpha = _isBgMoving ? 0 : 1;
+				if(_avatarView.isInNirvana) _bgStatic.alpha = 1;
+			}
 			
 			if (_isBgMoving && !_avatarView.isInNirvana)
 				SoundManager.playMovingMusic();
