@@ -59,12 +59,14 @@ package levels
 		
 		protected var _hasBeenHurtTime:Number;
 		protected var _hasBeenInNirvanaTime:Number;
+		protected var _hasFallenTime:Number;
 		
 		protected var parser:Parser;
 		
 		private static const MAX_JUMP_WAIT:Number = 0.6;
 		private static const HURT_WAIT_TIME:Number = 1.2;
 		private static const NIRVANA_WAIT_TIME:Number = 4.5;
+		private static const FALLEN_WAIT_TIME:Number = 1.5;
 		private static const GHOST_PASSING_SOUND_DISTANCE:Number = 40;
 		
 		public function LevelBase(main:Main)
@@ -77,6 +79,7 @@ package levels
 			_isBgMoving = false;
 			_hasBeenHurtTime = 0;
 			_hasBeenInNirvanaTime = 0;
+			_hasFallenTime = 0;
 			
 			_staticPlatformBodies = new Vector.<b2Body>;
 			_staticPlatformViews = new Vector.<MovieClip>;
@@ -370,6 +373,7 @@ package levels
 			if(staticAlphaTarget < -0.1) staticAlphaTarget = -0.1;
 			else if(staticAlphaTarget > 1.5) staticAlphaTarget = 1.5;
 			_staticAlpha += (staticAlphaTarget - _staticAlpha) * 5 * dt;
+			if(_hasFallenTime > 0) _staticAlpha = 1;
 			for(i=0; i<_staticPlatformViews.length; i++)
 			{
 				_staticPlatformViews[i].alpha = _staticAlpha;
@@ -444,6 +448,7 @@ package levels
 			{
 				_isBgMoving = _avatarView.currentFrame != 1;
 			}
+			
 			if(_bgStatic)
 			{
 				_bgStatic.alpha = _isBgMoving ? 0 : 1;
@@ -457,10 +462,11 @@ package levels
 			
 			if(_avatarView.isHurt && !_avatarView.isInNirvana) _hasBeenHurtTime += dt;
 			if(_hasBeenHurtTime > HURT_WAIT_TIME) _main.restart();
-			if(_avatarBody.GetPosition().y * PhysicsManager.RATIO > 1000) _main.restart();
+			if(_avatarBody.GetPosition().y * PhysicsManager.RATIO > 700) _hasFallenTime += dt;
 			
 			if(_avatarView.isInNirvana) _hasBeenInNirvanaTime += dt;
 			if(_hasBeenInNirvanaTime > NIRVANA_WAIT_TIME) _main.advanceLevel();
+			if(_hasFallenTime > FALLEN_WAIT_TIME) _main.restart();
 		}
 		
 		private function isPlayerOnGround():Boolean
