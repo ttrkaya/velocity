@@ -53,6 +53,7 @@ package levels
 		protected var _bgStatic:MovieClip;
 		protected var _bgMoving:MovieClip;
 		protected var _foreGround:MovieClip;
+		protected var _platformsView:MovieClip;
 		protected var _isBgMoving:Boolean;
 		
 		protected var _hasBeenHurtTime:Number;
@@ -95,10 +96,6 @@ package levels
 			_movingEnemyEndPoints = new Vector.<Point>;
 			_movingEnemyMoveRatios = new Vector.<Number>;
 			
-			_bgMoving = new BackGroundMoving();
-			this.addChild(_bgMoving);
-			_bgStatic = new BackGroundStatic();
-			this.addChild(_bgStatic);
 			_camera = new Sprite();
 			this.addChild(_camera);
 		}
@@ -372,6 +369,8 @@ package levels
 			var cameraTarget:Number = 400 - _avatarView.x;
 			_camera.x += (cameraTarget - _camera.x) * 3 * dt;
 			if(_camera.x > 0) _camera.x = 0;
+			var rightLimit:Number = -_platformsView.width + 800;
+			if(_camera.x < rightLimit) _camera.x = rightLimit;
 			_bgMoving.x = _bgStatic.x = _camera.x / 3;
 
 			const staticAlphaRatio:Number = 5;
@@ -442,6 +441,9 @@ package levels
 			}
 			_bgStatic.alpha = _isBgMoving ? 0 : 1;
 			if(_avatarView.isInNirvana) _bgStatic.alpha = 1;
+			
+			_platformsView.alpha = _staticAlpha;
+			_foreGround.alpha = 1 - _platformsView.alpha;
 			
 			if (_isBgMoving && !_avatarView.isInNirvana)
 				SoundManager.playMovingMusic();

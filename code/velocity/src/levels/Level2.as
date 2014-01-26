@@ -7,8 +7,6 @@ package levels
 
 	public class Level2 extends LevelBase
 	{
-		private var _platformsView:MovieClip;
-		
 		public function Level2(main:Main)
 		{
 			super(main);
@@ -18,9 +16,16 @@ package levels
 			{
 				_camera.removeChild(_staticPlatformViews[i]);
 			}
-			_platformsView = new LevelOverlay();
+			
+			_bgMoving = new BackGroundMoving2();
+			this.addChild(_bgMoving);
+			_bgStatic = new BackGroundStatic2();
+			this.addChild(_bgStatic);
+			
+			this.setChildIndex(_camera, this.numChildren-1);
+			_platformsView = new LevelOverlay2();
 			_camera.addChild(_platformsView);
-			_foreGround = new ForeGroundMoving();
+			_foreGround = new ForeGroundMoving2();
 			_camera.addChild(_foreGround);
 			_camera.setChildIndex(_avatarView, _camera.numChildren-1);
 		}
@@ -28,8 +33,6 @@ package levels
 		public override function update(dt:Number):void
 		{	
 			baseUpdate(dt);
-			_platformsView.alpha = _staticAlpha;
-			_foreGround.alpha = 1 - _platformsView.alpha;
 		}
 	}
 }
