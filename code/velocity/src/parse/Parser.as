@@ -70,11 +70,11 @@ package parse
 					if (movingEnemy.tag == waypoint.tag)
 						movingEnemy.addWayPoint(wayPointPoint);
 				
-				for each (var flyingEnemy:ShapeDefinition in flyingEnemies)
+				for each (var flyingEnemy:ShapeDefinition in _flyingEnemies)
 					if (flyingEnemy.tag == waypoint.tag)
 						flyingEnemy.addWayPoint(wayPointPoint);
 				
-				for each (var movingPlatform:ShapeDefinition in movingPlatforms)
+				for each (var movingPlatform:ShapeDefinition in _movingPlatforms)
 					if (movingPlatform.tag == waypoint.tag)
 						movingPlatform.addWayPoint(wayPointPoint);
 			}
