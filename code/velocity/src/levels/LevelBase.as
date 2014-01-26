@@ -42,7 +42,6 @@ package levels
 		protected var _movingPlatformSpeeds:Vector.<Number>;
 		
 		protected var _staticEnemyBodies:Vector.<b2Body>;
-		protected var _staticEnemyViews:Vector.<MovieClip>;
 		
 		protected var _movingEnemyBodies:Vector.<b2Body>;
 		protected var _movingEnemyViews:Vector.<MovieClip>;
@@ -93,7 +92,6 @@ package levels
 			_movingPlatformSpeeds = new Vector.<Number>;
 			
 			_staticEnemyBodies = new Vector.<b2Body>;
-			_staticEnemyViews = new Vector.<MovieClip>;
 			
 			_movingEnemyBodies = new Vector.<b2Body>;
 			_movingEnemyViews = new Vector.<MovieClip>;
@@ -192,14 +190,6 @@ package levels
 				var staticEnemyBody:b2Body = _physicsManager.createStaticCircle(
 					staticEnemyDef.startingPosition.x, staticEnemyDef.startingPosition.y, staticEnemyDef.width/2);
 				_staticEnemyBodies.push(staticEnemyBody);
-				
-				var staticEnemyView:MovieClip = new GhostView();
-				staticEnemyView.width = staticEnemyDef.width;
-				staticEnemyView.height = staticEnemyDef.height;
-				staticEnemyView.x = staticEnemyDef.startingPosition.x;
-				staticEnemyView.y = staticEnemyDef.startingPosition.y;
-				_staticEnemyViews.push(staticEnemyView);
-				_camera.addChild(staticEnemyView);
 			}
 			
 			var movingEnemyDefs:Vector.<ShapeDefinition> = parser.movingEnemies;
@@ -377,10 +367,6 @@ package levels
 			for(i=0; i<_staticPlatformViews.length; i++)
 			{
 				_staticPlatformViews[i].alpha = _staticAlpha;
-			}
-			for(i=0; i<_staticEnemyViews.length; i++)
-			{
-				_staticEnemyViews[i].alpha = _staticAlpha;
 			}
 			
 			var avatarSpeed:Number = _avatarBody.GetLinearVelocity().Length();
