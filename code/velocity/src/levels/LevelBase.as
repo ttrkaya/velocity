@@ -27,6 +27,7 @@ package levels
 		protected var _avatarFootBody:b2Body;
 		protected var _avatarView:MonkViewPlus;
 		protected var _jumpWaitTime:Number;
+		protected var _hasJumped:Boolean;
 		
 		protected var _endBody:b2Body;
 		
@@ -42,7 +43,6 @@ package levels
 		protected var _movingPlatformSpeeds:Vector.<Number>;
 		
 		protected var _staticEnemyBodies:Vector.<b2Body>;
-		protected var _staticEnemyViews:Vector.<MovieClip>;
 		
 		protected var _movingEnemyBodies:Vector.<b2Body>;
 		protected var _movingEnemyViews:Vector.<MovieClip>;
@@ -76,6 +76,7 @@ package levels
 			_physicsManager = new PhysicsManager();
 			
 			_jumpWaitTime = 0;
+			_hasJumped = false;
 			_isBgMoving = false;
 			_hasBeenHurtTime = 0;
 			_hasBeenInNirvanaTime = 0;
@@ -93,7 +94,6 @@ package levels
 			_movingPlatformSpeeds = new Vector.<Number>;
 			
 			_staticEnemyBodies = new Vector.<b2Body>;
-			_staticEnemyViews = new Vector.<MovieClip>;
 			
 			_movingEnemyBodies = new Vector.<b2Body>;
 			_movingEnemyViews = new Vector.<MovieClip>;
@@ -192,14 +192,6 @@ package levels
 				var staticEnemyBody:b2Body = _physicsManager.createStaticCircle(
 					staticEnemyDef.startingPosition.x, staticEnemyDef.startingPosition.y, staticEnemyDef.width/2);
 				_staticEnemyBodies.push(staticEnemyBody);
-				
-				var staticEnemyView:MovieClip = new GhostView();
-				staticEnemyView.width = staticEnemyDef.width;
-				staticEnemyView.height = staticEnemyDef.height;
-				staticEnemyView.x = staticEnemyDef.startingPosition.x;
-				staticEnemyView.y = staticEnemyDef.startingPosition.y;
-				_staticEnemyViews.push(staticEnemyView);
-				_camera.addChild(staticEnemyView);
 			}
 			
 			var movingEnemyDefs:Vector.<ShapeDefinition> = parser.movingEnemies;
@@ -250,6 +242,8 @@ package levels
 				_avatarBody.ApplyForce(playerForce, _avatarBody.GetWorldCenter());
 			}
 			
+			if(!PlayerInput.up) _hasJumped = false;
+			
 			_jumpWaitTime -= dt;
 			if(PlayerInput.up)
 			{
@@ -258,8 +252,9 @@ package levels
 					_avatarBody.ApplyForce(new b2Vec2(0,-C.PLAYER_FORCE_JUMP_ENRFORCE), _avatarBody.GetWorldCenter());
 				}
 				
-				if(_jumpWaitTime < 0 && isAvatarOnGround)
+				if(_jumpWaitTime < 0 && isAvatarOnGround && !_hasJumped)
 				{
+					_hasJumped = true;
 					_jumpWaitTime = MAX_JUMP_WAIT;
 					_avatarBody.ApplyImpulse(new b2Vec2(0,-C.PLAYER_FORCE_JUMP), _avatarBody.GetWorldCenter());
 				}
@@ -377,10 +372,6 @@ package levels
 			for(i=0; i<_staticPlatformViews.length; i++)
 			{
 				_staticPlatformViews[i].alpha = _staticAlpha;
-			}
-			for(i=0; i<_staticEnemyViews.length; i++)
-			{
-				_staticEnemyViews[i].alpha = _staticAlpha;
 			}
 			
 			var avatarSpeed:Number = _avatarBody.GetLinearVelocity().Length();
