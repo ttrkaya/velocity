@@ -27,6 +27,7 @@ package levels
 		protected var _avatarFootBody:b2Body;
 		protected var _avatarView:MonkViewPlus;
 		protected var _jumpWaitTime:Number;
+		protected var _hasJumped:Boolean;
 		
 		protected var _endBody:b2Body;
 		
@@ -75,6 +76,7 @@ package levels
 			_physicsManager = new PhysicsManager();
 			
 			_jumpWaitTime = 0;
+			_hasJumped = false;
 			_isBgMoving = false;
 			_hasBeenHurtTime = 0;
 			_hasBeenInNirvanaTime = 0;
@@ -240,6 +242,8 @@ package levels
 				_avatarBody.ApplyForce(playerForce, _avatarBody.GetWorldCenter());
 			}
 			
+			if(!PlayerInput.up) _hasJumped = false;
+			
 			_jumpWaitTime -= dt;
 			if(PlayerInput.up)
 			{
@@ -248,8 +252,9 @@ package levels
 					_avatarBody.ApplyForce(new b2Vec2(0,-C.PLAYER_FORCE_JUMP_ENRFORCE), _avatarBody.GetWorldCenter());
 				}
 				
-				if(_jumpWaitTime < 0 && isAvatarOnGround)
+				if(_jumpWaitTime < 0 && isAvatarOnGround && !_hasJumped)
 				{
+					_hasJumped = true;
 					_jumpWaitTime = MAX_JUMP_WAIT;
 					_avatarBody.ApplyImpulse(new b2Vec2(0,-C.PLAYER_FORCE_JUMP), _avatarBody.GetWorldCenter());
 				}
