@@ -65,7 +65,7 @@ package
 		public static function playLevelEndSound():void
 		{
 			var startSound:Sound = new EndSound();
-			_soundChannel = startSound.play(0, 1);
+			_soundChannel = startSound.play(0, 1, new SoundTransform(0.6));
 		}
 		
 		public static function playJumpSound():void
