@@ -42,6 +42,9 @@ package levels
 		protected var _movingPlatformMoveRatios:Vector.<Number>;
 		protected var _movingPlatformSpeeds:Vector.<Number>;
 		
+		protected var _rotatingPlatformBodies:Vector.<b2Body>;
+		protected var _rotatingPlatformViews:Vector.<MovieClip>;
+		
 		protected var _staticEnemyBodies:Vector.<b2Body>;
 		
 		protected var _movingEnemyBodies:Vector.<b2Body>;
@@ -300,37 +303,34 @@ package levels
 					SoundManager.playLevelEndSound();
 				}
 			}
-			
-			if(_movingPlatformMoveRatios)
+
+			for(i=0; i<_movingPlatformBodies.length; i++)
 			{
-				for(i=0; i<_movingPlatformBodies.length; i++)
+				var platformRatio:Number = _movingPlatformMoveRatios[i];
+				platformRatio += dt * _movingPlatformSpeeds[i];
+				if(platformRatio > 1) platformRatio -= 1;
+				var platformTarget:Point = new Point();
+				if(platformRatio < 0.5) 
 				{
-					var platformRatio:Number = _movingPlatformMoveRatios[i];
-					platformRatio += dt * _movingPlatformSpeeds[i];
-					if(platformRatio > 1) platformRatio -= 1;
-					var platformTarget:Point = new Point();
-					if(platformRatio < 0.5) 
-					{
-						platformTarget.x = _movingPlatformStartingPoints[i].x + 
-							platformRatio * 2 * (_movingPlatformEndPoints[i].x - _movingPlatformStartingPoints[i].x);
-						platformTarget.y = _movingPlatformStartingPoints[i].y +
-							platformRatio * 2 * (_movingPlatformEndPoints[i].y - _movingPlatformStartingPoints[i].y);
-					}
-					else
-					{
-						platformTarget.x = _movingPlatformStartingPoints[i].x +
-							(1-platformRatio) * 2 * (_movingPlatformEndPoints[i].x - _movingPlatformStartingPoints[i].x);
-						platformTarget.y = _movingPlatformStartingPoints[i].y +
-							(1-platformRatio) * 2 * (_movingPlatformEndPoints[i].y - _movingPlatformStartingPoints[i].y);
-					}
-					_movingPlatformMoveRatios[i] = platformRatio;
-					_movingPlatformBodies[i].SetLinearVelocity(new b2Vec2(
-						(platformTarget.x/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().x) / dt,
-						(platformTarget.y/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().y) / dt));
-					
-					_movingPlatformViews[i].x = _movingPlatformBodies[i].GetPosition().x * PhysicsManager.RATIO;
-					_movingPlatformViews[i].y = _movingPlatformBodies[i].GetPosition().y * PhysicsManager.RATIO;
+					platformTarget.x = _movingPlatformStartingPoints[i].x + 
+						platformRatio * 2 * (_movingPlatformEndPoints[i].x - _movingPlatformStartingPoints[i].x);
+					platformTarget.y = _movingPlatformStartingPoints[i].y +
+						platformRatio * 2 * (_movingPlatformEndPoints[i].y - _movingPlatformStartingPoints[i].y);
 				}
+				else
+				{
+					platformTarget.x = _movingPlatformStartingPoints[i].x +
+						(1-platformRatio) * 2 * (_movingPlatformEndPoints[i].x - _movingPlatformStartingPoints[i].x);
+					platformTarget.y = _movingPlatformStartingPoints[i].y +
+						(1-platformRatio) * 2 * (_movingPlatformEndPoints[i].y - _movingPlatformStartingPoints[i].y);
+				}
+				_movingPlatformMoveRatios[i] = platformRatio;
+				_movingPlatformBodies[i].SetLinearVelocity(new b2Vec2(
+					(platformTarget.x/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().x) / dt,
+					(platformTarget.y/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().y) / dt));
+				
+				_movingPlatformViews[i].x = _movingPlatformBodies[i].GetPosition().x * PhysicsManager.RATIO;
+				_movingPlatformViews[i].y = _movingPlatformBodies[i].GetPosition().y * PhysicsManager.RATIO;
 			}
 			
 			for(i=0; i<_movingEnemyBodies.length; i++)
@@ -494,6 +494,13 @@ package levels
 					for(i=0; i<_movingPlatformBodies.length; i++)
 					{
 						if(other == _movingPlatformBodies[i].GetFixtureList()) return true;
+					}
+					if(_rotatingPlatformBodies)
+					{
+						for(i=0; i<_rotatingPlatformBodies.length; i++)
+						{
+							if(other == _rotatingPlatformBodies[i].GetFixtureList()) return true;
+						}
 					}
 				}
 			}

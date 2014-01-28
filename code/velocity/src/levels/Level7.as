@@ -10,7 +10,10 @@ package levels
 	{
 		private var _angle:Number;
 		
-		private const CENTER:Point = new Point(400, 300);
+		private var _wheel:MovieClip;
+		private var _wheelMoving:MovieClip;
+		
+		private const CENTER:Point = new Point(400, -600);
 		private const R:Number = 150;
 		private const W:Number = 60;
 		private const H:Number = 10;
@@ -22,6 +25,38 @@ package levels
 			super(main);
 			parseLevelFromSwcWithID(7);
 			
+			for(i=0; i<_staticPlatformViews.length; i++)
+			{
+				_camera.removeChild(_staticPlatformViews[i]);
+			}
+			
+			_bgMoving = new BackGroundMoving7();
+			this.addChild(_bgMoving);
+			_bgStatic = new BackGroundStatic7();
+			this.addChild(_bgStatic);
+			
+			this.setChildIndex(_camera, this.numChildren-1);
+			_platformsView = new LevelOverlay7();
+			_camera.addChild(_platformsView);
+			_foreGround = new ForeGroundMoving7();
+			_camera.addChild(_foreGround);
+			_camera.setChildIndex(_avatarView, _camera.numChildren-1);
+			
+			_wheel = new Wheel();
+			_camera.addChild(_wheel);
+			
+			_wheelMoving = new WheelMoving();
+			_wheelMoving.x = 400;
+			_wheelMoving.y = -600;
+			_camera.addChild(_wheelMoving);
+			_camera.setChildIndex(_wheelMoving, 0);
+			_camera.setChildIndex(_wheel, 0);
+			_bgMoving.y = _camera.y * 0.3;
+			_bgStatic.y = _camera.y * 0.3;
+			
+			_rotatingPlatformBodies = new Vector.<b2Body>;
+			_rotatingPlatformViews = new Vector.<MovieClip>;
+			
 			_angle = 0;
 			for(i=0; i<6; i++)
 			{
@@ -30,18 +65,16 @@ package levels
 				var py:Number = Math.sin(angle) * R + CENTER.y;
 				
 				var movingPlatformBody:b2Body = _physicsManager.createKinematicRectangle(
-					px, py, W, H);
-				_movingPlatformBodies.push(movingPlatformBody);
+					px, py, W/2, H/2, 0, 3);
+				_rotatingPlatformBodies.push(movingPlatformBody);
 				var movingPlatformView:MovieClip = new MovingPlatformerView();
 				movingPlatformView.x = px;
 				movingPlatformView.y = py;
 				movingPlatformView.width = W*2;
-				movingPlatformView.height = H*6;
-				_movingPlatformViews.push(movingPlatformView);
+				movingPlatformView.height = H*3;
+				_rotatingPlatformViews.push(movingPlatformView);
 				_camera.addChild(movingPlatformView);
 			}
-			
-			_movingPlatformMoveRatios = null;
 		}
 		
 		public override function update(dt:Number):void
@@ -57,13 +90,20 @@ package levels
 				var px:Number = Math.cos(angle) * R + CENTER.x;
 				var py:Number = Math.sin(angle) * R + CENTER.y;
 				
-				_movingPlatformBodies[i].SetLinearVelocity(new b2Vec2(
-					(px/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().x) / dt,
-					(py/PhysicsManager.RATIO - _movingPlatformBodies[i].GetPosition().y) / dt));
+				_rotatingPlatformBodies[i].SetLinearVelocity(new b2Vec2(
+					(px/PhysicsManager.RATIO - _rotatingPlatformBodies[i].GetPosition().x) / dt,
+					(py/PhysicsManager.RATIO - _rotatingPlatformBodies[i].GetPosition().y) / dt));
 				
-				_movingPlatformViews[i].x = px;
-				_movingPlatformViews[i].y = py;
+				_rotatingPlatformViews[i].x = px;
+				_rotatingPlatformViews[i].y = py;
 			}
+			
+			var cameraTargetY:Number = 500 - _avatarBody.GetPosition().y * PhysicsManager.RATIO;
+			if(cameraTargetY < 0) cameraTargetY = 0;
+			_camera.y += (cameraTargetY - _camera.y) * dt;
+			
+			_wheel.alpha = _staticAlpha;
+			_wheelMoving.alpha = 1 - _wheel.alpha;
 		}
 	}
 }

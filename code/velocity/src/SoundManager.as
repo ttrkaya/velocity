@@ -35,8 +35,6 @@ package
 		
 		public static function playMusic():void
 		{
-			return;
-			
 			var staticMusic:Sound = new StaticMusic();
 			_musicStaticChannel = staticMusic.play(0, 0, new SoundTransform(1));
 			
@@ -67,7 +65,7 @@ package
 		public static function playLevelEndSound():void
 		{
 			var startSound:Sound = new EndSound();
-			_soundChannel = startSound.play(0, 1);
+			_soundChannel = startSound.play(0, 1, new SoundTransform(0.6));
 		}
 		
 		public static function playJumpSound():void
@@ -88,7 +86,7 @@ package
 			{ 
 				var ghostSound:Sound = Math.random() < 0.5 ? new GhostPassingSound() : new GhostPassingSoundLong();
 				_enemySoundChannel =  ghostSound.play(0, 1, new SoundTransform(3));
-				_enemySoundChannel.addEventListener(Event.SOUND_COMPLETE, onEnemySoundComplete);
+				if(_enemySoundChannel) _enemySoundChannel.addEventListener(Event.SOUND_COMPLETE, onEnemySoundComplete);
 				enemySoundIsPlaying = true;
 			}
 		}
