@@ -25,6 +25,23 @@ package levels
 			super(main);
 			parseLevelFromSwcWithID(7);
 			
+			for(i=0; i<_staticPlatformViews.length; i++)
+			{
+				_camera.removeChild(_staticPlatformViews[i]);
+			}
+			
+			_bgMoving = new BackGroundMoving7();
+			this.addChild(_bgMoving);
+			_bgStatic = new BackGroundStatic7();
+			this.addChild(_bgStatic);
+			
+			this.setChildIndex(_camera, this.numChildren-1);
+			_platformsView = new LevelOverlay7();
+			_camera.addChild(_platformsView);
+			_foreGround = new ForeGroundMoving7();
+			_camera.addChild(_foreGround);
+			_camera.setChildIndex(_avatarView, _camera.numChildren-1);
+			
 			_wheel = new Wheel();
 			_camera.addChild(_wheel);
 			
@@ -34,6 +51,8 @@ package levels
 			_camera.addChild(_wheelMoving);
 			_camera.setChildIndex(_wheelMoving, 0);
 			_camera.setChildIndex(_wheel, 0);
+			_bgMoving.y = _camera.y * 0.3;
+			_bgStatic.y = _camera.y * 0.3;
 			
 			_rotatingPlatformBodies = new Vector.<b2Body>;
 			_rotatingPlatformViews = new Vector.<MovieClip>;

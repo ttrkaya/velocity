@@ -86,7 +86,7 @@ package
 			{ 
 				var ghostSound:Sound = Math.random() < 0.5 ? new GhostPassingSound() : new GhostPassingSoundLong();
 				_enemySoundChannel =  ghostSound.play(0, 1, new SoundTransform(3));
-				_enemySoundChannel.addEventListener(Event.SOUND_COMPLETE, onEnemySoundComplete);
+				if(_enemySoundChannel) _enemySoundChannel.addEventListener(Event.SOUND_COMPLETE, onEnemySoundComplete);
 				enemySoundIsPlaying = true;
 			}
 		}
