@@ -36,15 +36,15 @@ package
 		public static function playMusic():void
 		{
 			var staticMusic:Sound = new StaticMusic();
-			_musicStaticChannel = staticMusic.play(0, 0, new SoundTransform(1));
+			_musicStaticChannel = staticMusic.play(0, int.MAX_VALUE, new SoundTransform(1));
 			
 			//this here is added to start the music with a different beat. Unfortunately, it does not work.
-			var startingBeat:Sound = new MovingMusicStart();
-			_musicMovingChannel = startingBeat.play(0, 0, new SoundTransform(0));
-			_musicMovingChannel.addEventListener(Event.SOUND_COMPLETE, onBeatComplete);
+			//var startingBeat:Sound = new MovingMusicStart();
+			//_musicMovingChannel = startingBeat.play(0, 0, new SoundTransform(0));
+			//_musicMovingChannel.addEventListener(Event.SOUND_COMPLETE, onBeatComplete);
 			
 			var movingMusic:Sound = new MovingMusic();
-			_musicMovingChannel = movingMusic.play(0, 0, new SoundTransform(0));
+			_musicMovingChannel = movingMusic.play(0, int.MAX_VALUE, new SoundTransform(0));
 		
 		}
 		
