@@ -35,6 +35,11 @@ package
 		
 		public static function playMusic():void
 		{
+			if (_musicMovingChannel != null)
+				_musicMovingChannel.stop();
+			if (_musicStaticChannel != null)
+				_musicStaticChannel.stop();
+			
 			var staticMusic:Sound = new StaticMusic();
 			_musicStaticChannel = staticMusic.play(0, int.MAX_VALUE, new SoundTransform(1));
 			

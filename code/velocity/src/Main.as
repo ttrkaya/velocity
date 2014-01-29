@@ -1,28 +1,20 @@
 ﻿package
 {
-	import flash.display.MovieClip;
-	import flash.display.Shape;
-	import flash.display.SimpleButton;
-	import flash.display.Sprite;
-	import flash.display.Stage;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
-	import flash.events.Event;
-	import flash.events.KeyboardEvent;
-	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
-	import flash.ui.Keyboard;
-	import flash.utils.Timer;
-	
+	import com.greensock.TweenMax;
+	import flash.display.*;
+	import flash.events.*;
+	import flash.ui.*;
+	import flash.utils.*;
 	import levels.*;
+	import parse.*;
 	
-	import parse.Parser;
+	
+	
 	
 	[SWF(width="800",height="600",frameRate="30",backgroundColor="#000000")]
-
+	
 	public class Main extends Sprite
 	{
-		
 		
 		private var _level:LevelBase;
 		private var _currentLevelId:int = 0;
@@ -33,14 +25,15 @@
 		
 		public static var stage:Stage;
 		
+		private var _introMovie:MovieClip;
 		private var _screenBG:MovieClip;
 		private var _timer:Timer;
 		
-		private static const levelClasses:Vector.<Class> = new <Class>[Level7, Level0, Level1, Level2, Level3, Level4, Level5, Level6, Level7];
+		private static const levelClasses:Vector.<Class> = new <Class>[ Level0, Level1, Level2, Level3, Level4, Level5, Level6, Level7];
 		
 		public function Main()
 		{
-			this.addEventListener(Event.ADDED_TO_STAGE, initMenu);
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		
 		}
 		
@@ -48,32 +41,46 @@
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			SoundManager.playMusic();
-			_screenBG = new IntroMovie();
-			_screenBG.width = 800;
-			_screenBG.height = 600;
-			_screenBG.x = _screenBG.y = 0;
-			_screenBG.play();
-			addChild(_screenBG);
-			_timer = new Timer(10000, 1);
-			_timer.addEventListener(TimerEvent.TIMER_COMPLETE, initMenu);
+			_introMovie = new IntroMovie();
+			//_screenBG.width = 800;
+			//_screenBG.height = 600;
+			_introMovie.x = stage.stageWidth / 2;
+			_introMovie.y = stage.stageHeight / 2;
+			_introMovie.play();
+			this.addChild(_introMovie);
+			this.addEventListener(Event.ENTER_FRAME, initMenu);
 		
 		}
 		
 		public function initMenu(e:Event):void
 		{
+			if ( _introMovie.currentFrame < 265)
+				return;
+			
+			//init the starting menu	
+			removeEventListener(Event.ENTER_FRAME, initMenu);
+			
+			SoundManager.playLevelEndSound();
+			TweenMax.to(_introMovie, 2, { alpha:0 } );
+			
+			
 			_screenBG = new MenuBackGround();
 			_screenBG.x = 275;
 			_screenBG.y = 200;
 			addChild(_screenBG);
-
+			
 			var startBtn:PlayGameBtn = new PlayGameBtn();
 			startBtn.y = 50;
 			startBtn.x = -60;
+			startBtn.alpha = 0;
 			_screenBG.addChild(startBtn);
+			TweenMax.to(startBtn, 1, { alpha:1 } );
 			
 			var creditsBtn:CreditsBtn = new CreditsBtn();
 			creditsBtn.y = 150;
-			creditsBtn.x = -60
+			creditsBtn.x = -60;
+			creditsBtn.alpha = 0;
+			TweenMax.to(creditsBtn, 1, { alpha:1 } );
 			_screenBG.addChild(creditsBtn);
 			
 			startBtn.addEventListener(MouseEvent.CLICK, gameStart);
@@ -95,6 +102,9 @@
 		
 		public function gameStart(m:Event):void
 		{
+			if (_introMovie != null)
+				removeChild(_introMovie);
+			
 			if (_screenBG != null)
 				removeChild(_screenBG);
 			
