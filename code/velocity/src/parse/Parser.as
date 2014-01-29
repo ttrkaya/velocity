@@ -1,4 +1,4 @@
-package parse
+﻿package parse
 {
 	import flash.display.MovieClip;
 	import flash.display.Shape;
@@ -10,7 +10,7 @@ package parse
 	public class Parser
 	{
 		public static const levelDefs:Vector.<MovieClip> = new <MovieClip>[
-			new DefLevel0(), new DefLevel1(), new DefLevel2(), new DefLevel3(), new DefLevel4(), new DefLevel5, new DefLevel6(), new DefLevel7()];
+			new DefLevel0(), new DefLevel1(), new DefLevel2(), new DefLevel3(), new DefLevel4()];//new DefLevel5, new DefLevel6(), new DefLevel7()];
 		
 		private var _staticPlatforms:Vector.<ShapeDefinition>;
 		private var _movingPlatforms:Vector.<ShapeDefinition>;
