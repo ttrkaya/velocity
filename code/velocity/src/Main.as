@@ -29,7 +29,7 @@
 		private var _screenBG:MovieClip;
 		private var _timer:Timer;
 		
-		private static const levelClasses:Vector.<Class> = new <Class>[ Level0, Level1, Level2, Level3, Level4, Level5, Level6, Level7];
+		private static const levelClasses:Vector.<Class> = new <Class>[ Level0, Level1, Level2, Level5, Level6, Level4, Level3, Level0, Level7];
 		
 		public function Main()
 		{
@@ -42,25 +42,26 @@
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			SoundManager.playMusic();
 			_introMovie = new IntroMovie();
-			//_screenBG.width = 800;
-			//_screenBG.height = 600;
 			_introMovie.x = stage.stageWidth / 2;
 			_introMovie.y = stage.stageHeight / 2;
 			_introMovie.play();
 			this.addChild(_introMovie);
 			this.addEventListener(Event.ENTER_FRAME, initMenu);
-		
+			this.addEventListener(MouseEvent.CLICK, initMenu);
 		}
 		
 		public function initMenu(e:Event):void
 		{
-			if ( _introMovie.currentFrame < 265)
+			if ( _introMovie.currentFrame < 265 && !(e is MouseEvent))
 				return;
 			
 			//init the starting menu	
 			removeEventListener(Event.ENTER_FRAME, initMenu);
+			removeEventListener(MouseEvent.CLICK, initMenu);
 			
-			SoundManager.playLevelEndSound();
+			SoundManager.playLevelEndSound(); 
+			SoundManager.playMovingMusic();
+			
 			TweenMax.to(_introMovie, 2, { alpha:0 } );
 			
 			
@@ -88,9 +89,13 @@
 		
 		}
 		
-		private function rollCredits(e:MouseEvent):void
+		private function rollCredits(e:Event):void
 		{
-			removeChild(_screenBG);
+			while (this.numChildren > 0)
+				this.removeChildAt(0);
+				
+			removeEventListener(MouseEvent.CLICK, rollCredits);
+			
 			_screenBG = new CreditScreen();
 			var startBtn:PlayGameBtn = new PlayGameBtn();
 			startBtn.y = 194.05;
@@ -103,10 +108,16 @@
 		public function gameStart(m:Event):void
 		{
 			if (_introMovie != null)
+			{
 				removeChild(_introMovie);
+				_introMovie = null;
+			}
 			
 			if (_screenBG != null)
+			{
 				removeChild(_screenBG);
+				_screenBG = null;
+			}
 			
 			stage.scaleMode = StageScaleMode.SHOW_ALL;
 			stage.align = StageAlign.TOP;
@@ -128,6 +139,7 @@
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			stage.focus = stage;
 			
 			SoundManager.playMusic();
 		}
@@ -219,9 +231,37 @@
 		public function advanceLevel():void
 		{
 			_currentLevelId++;
-			_currentLevelId %= levelClasses.length;
-			this.restart();
-			//SoundManager.playMusic();	
+			if (_currentLevelId == levelClasses.length)
+				gameWin();
+			else
+			{
+				_currentLevelId %= levelClasses.length;
+				this.restart();
+			}
+			
+		}
+		
+		public function gameWin():void 
+		{
+			this.removeChild(_level);
+			_level.destroy();
+			_level = null;
+			this.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+			_screenBG = new EndScreen();
+			_screenBG.alpha = 0;
+			this.addChild(_screenBG);
+			TweenMax.to(_screenBG, 1, { alpha: 1 } );
+			
+			
+			var creditsBtn:CreditsBtn = new CreditsBtn();
+			creditsBtn.x = 190;
+			creditsBtn.y = 433;
+			creditsBtn.alpha = 0;
+			TweenMax.to(creditsBtn, 5, { alpha:1 } );
+			_screenBG.addChild(creditsBtn);
+			
+			creditsBtn.addEventListener(MouseEvent.CLICK, rollCredits);
+			_currentLevelId = 0;
 		}
 	}
 }

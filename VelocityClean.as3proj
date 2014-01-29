@@ -55,9 +55,9 @@
     <element path="code\velocity\lib\greensock.swc" />
     <element path="code\velocity\lib\MenuAssets.swc" />
     <element path="code\velocity\lib\menuBackGround.swc" />
-    <element path="code\velocity\lib\assets.swc" />
     <element path="code\velocity\lib\levels.swc" />
     <element path="code\velocity\lib\IntroMovie.swc" />
+    <element path="code\velocity\lib\assets.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
