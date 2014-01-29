@@ -18,10 +18,12 @@
 	
 	import parse.Parser;
 	
-	[SWF(width="800",height="600",frameRate="30",backgroundColor="#888888")]
-	
+	[SWF(width="800",height="600",frameRate="30",backgroundColor="#000000")]
+
 	public class Main extends Sprite
 	{
+		
+		
 		private var _level:LevelBase;
 		private var _currentLevelId:int = 0;
 		
@@ -34,11 +36,11 @@
 		private var _screenBG:MovieClip;
 		private var _timer:Timer;
 		
-		private static const levelClasses:Vector.<Class> = new <Class>[Level0, Level1, Level2, Level3, Level4, Level5, Level6, Level7];
+		private static const levelClasses:Vector.<Class> = new <Class>[Level7, Level0, Level1, Level2, Level3, Level4, Level5, Level6, Level7];
 		
 		public function Main()
 		{
-			this.addEventListener(Event.ADDED_TO_STAGE, gameStart);
+			this.addEventListener(Event.ADDED_TO_STAGE, initMenu);
 		
 		}
 		
@@ -49,6 +51,7 @@
 			_screenBG = new IntroMovie();
 			_screenBG.width = 800;
 			_screenBG.height = 600;
+			_screenBG.x = _screenBG.y = 0;
 			_screenBG.play();
 			addChild(_screenBG);
 			_timer = new Timer(10000, 1);
@@ -59,17 +62,18 @@
 		public function initMenu(e:Event):void
 		{
 			_screenBG = new MenuBackGround();
-			_screenBG.width = 800;
-			_screenBG.height = 600;
-			
+			_screenBG.x = 275;
+			_screenBG.y = 200;
+			addChild(_screenBG);
+
 			var startBtn:PlayGameBtn = new PlayGameBtn();
-			startBtn.y = 300;
-			startBtn.x = 100;
+			startBtn.y = 50;
+			startBtn.x = -60;
 			_screenBG.addChild(startBtn);
 			
 			var creditsBtn:CreditsBtn = new CreditsBtn();
-			creditsBtn.y = 300;
-			creditsBtn.x = 700 - creditsBtn.width;
+			creditsBtn.y = 150;
+			creditsBtn.x = -60
 			_screenBG.addChild(creditsBtn);
 			
 			startBtn.addEventListener(MouseEvent.CLICK, gameStart);
@@ -79,13 +83,14 @@
 		
 		private function rollCredits(e:MouseEvent):void
 		{
+			removeChild(_screenBG);
 			_screenBG = new CreditScreen();
 			var startBtn:PlayGameBtn = new PlayGameBtn();
 			startBtn.y = 194.05;
 			startBtn.x = 533.7;
 			_screenBG.addChild(startBtn);
 			startBtn.addEventListener(MouseEvent.CLICK, gameStart);
-		
+			addChild(_screenBG);
 		}
 		
 		public function gameStart(m:Event):void

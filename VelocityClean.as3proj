@@ -51,13 +51,13 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="code\velocity\lib\assets.swc" />
     <element path="code\velocity\lib\Box2D.swc" />
     <element path="code\velocity\lib\greensock.swc" />
     <element path="code\velocity\lib\introMovie.swc" />
-    <element path="code\velocity\lib\levels.swc" />
     <element path="code\velocity\lib\MenuAssets.swc" />
     <element path="code\velocity\lib\menuBackGround.swc" />
+    <element path="code\velocity\lib\assets.swc" />
+    <element path="code\velocity\lib\levels.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
