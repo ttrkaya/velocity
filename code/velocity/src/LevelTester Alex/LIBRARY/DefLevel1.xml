@@ -1,0 +1,132 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="DefLevel1" itemID="52e3db45-0000075f" linkageExportForAS="true" linkageClassName="DefLevel1" lastModified="1390695315" lastUniqueIdentifier="15">
+  <timeline>
+    <DOMTimeline name="DefLevel1">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="StaticPlatform" centerPoint3DX="-47.65" centerPoint3DY="51.35">
+                  <matrix>
+                    <Matrix d="5.97799682617188" tx="-47.65" ty="300.25"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="StaticPlatform" centerPoint3DX="700.35" centerPoint3DY="585.15">
+                  <matrix>
+                    <Matrix a="12.8693084716797" d="0.300003051757813" tx="644.35" ty="585.15"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="Player" centerPoint3DX="48.35" centerPoint3DY="547.3">
+                  <matrix>
+                    <Matrix tx="48.35" ty="547.3"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="StaticPlatform" centerPoint3DX="2737.9" centerPoint3DY="52.55">
+                  <matrix>
+                    <Matrix d="5.97799682617188" tx="2737.9" ty="301.45"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="EndPoint" centerPoint3DX="2609.4" centerPoint3DY="541.95">
+                  <matrix>
+                    <Matrix tx="2609.4" ty="541.95"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="StaticPlatform" centerPoint3DX="346.3" centerPoint3DY="544.15">
+                  <matrix>
+                    <Matrix a="0.678207397460938" d="0.539871215820313" tx="396.3" ty="567.15"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="StaticPlatform" centerPoint3DX="2410.05" centerPoint3DY="585">
+                  <matrix>
+                    <Matrix a="12.0813903808594" d="0.300003051757813" tx="2085.65" ty="585"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMComponentInstance libraryItemName="Waypoint" centerPoint3DX="1948" centerPoint3DY="310" uniqueID="9">
+                  <matrix>
+                    <Matrix tx="1948" ty="310"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                  <dataBindingXML><![CDATA[<component metaDataFetched='true' schemaUrl='' schemaOperation='' sceneRootLabel='Scene 1' oldCopiedComponentPath=''>
+</component>
+]]></dataBindingXML>
+                  <parametersAsXML><![CDATA[   <property id="id">
+      <Inspectable name="id" variable="id" category="" verbose="0" defaultValue="1,00" type="Number"/>
+   </property>
+]]></parametersAsXML>
+                </DOMComponentInstance>
+                <DOMComponentInstance libraryItemName="MovingEnemy" centerPoint3DX="1948" centerPoint3DY="580" uniqueID="11">
+                  <matrix>
+                    <Matrix tx="1948" ty="580"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                  <dataBindingXML><![CDATA[<component metaDataFetched='true' schemaUrl='' schemaOperation='' sceneRootLabel='Scene 1' oldCopiedComponentPath=''>
+</component>
+]]></dataBindingXML>
+                  <parametersAsXML><![CDATA[   <property id="beginRatio">
+      <Inspectable name="beginRatio" variable="beginRatio" category="" verbose="0" defaultValue="0,50" type="Number"/>
+   </property>
+   <property id="gotoId">
+      <Inspectable name="gotoId" variable="gotoId" category="" verbose="0" defaultValue="1,00" type="Number"/>
+   </property>
+   <property id="speed">
+      <Inspectable name="speed" variable="speed" category="" verbose="0" defaultValue="1" type="Number"/>
+   </property>
+]]></parametersAsXML>
+                </DOMComponentInstance>
+                <DOMSymbolInstance libraryItemName="StaticPlatform" centerPoint3DX="867.3" centerPoint3DY="571.4">
+                  <matrix>
+                    <Matrix a="1.49058532714844" d="0.590072631835938" tx="955.75" ty="573.9"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="StaticPlatform" centerPoint3DX="1057.95" centerPoint3DY="588.25">
+                  <matrix>
+                    <Matrix a="0.438400268554688" b="0.438400268554688" c="-0.438400268554688" d="0.438400268554688" tx="1031.3" ty="588.4"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="StaticPlatform" centerPoint3DX="907.1" centerPoint3DY="589.35">
+                  <matrix>
+                    <Matrix a="0.438400268554688" b="0.438400268554688" c="-0.438400268554688" d="0.438400268554688" tx="880.45" ty="589.5"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

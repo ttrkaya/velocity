@@ -1,0 +1,51 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ForegroundMovingLevel1" itemID="52e43a21-0000043c" linkageExportForAS="true" linkageClassName="ForegroundMovingLevel1" lastModified="1390694861">
+  <timeline>
+    <DOMTimeline name="ForegroundMovingLevel1">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMBitmapInstance libraryItemName="fog.png">
+                  <matrix>
+                    <Matrix tx="1051.95" ty="431.9"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="fog2.png">
+                  <matrix>
+                    <Matrix ty="481.9"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="fog.png">
+                  <matrix>
+                    <Matrix tx="487.6" ty="425.9"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="fog2.png">
+                  <matrix>
+                    <Matrix tx="718" ty="485.55"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="fog.png">
+                  <matrix>
+                    <Matrix tx="1504.9" ty="431.9"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="fog2.png">
+                  <matrix>
+                    <Matrix tx="2020.9" ty="482.55"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="fog.png">
+                  <matrix>
+                    <Matrix tx="2412.9" ty="424.6"/>
+                  </matrix>
+                </DOMBitmapInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

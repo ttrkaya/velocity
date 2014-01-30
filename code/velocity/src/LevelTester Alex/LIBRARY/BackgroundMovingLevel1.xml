@@ -1,0 +1,84 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="BackgroundMovingLevel1" itemID="52e4394d-00000411" linkageExportForAS="true" linkageClassName="BackgroundMovingLevel1" lastModified="1390694081">
+  <timeline>
+    <DOMTimeline name="BackgroundMovingLevel1">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMBitmapInstance selected="true" libraryItemName="background second dimension.jpg">
+                  <matrix>
+                    <Matrix a="1.79611206054688" tx="100.2"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="747.5" y="300"/>
+                  </transformationPoint>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="dimension two montains.png">
+                  <matrix>
+                    <Matrix tx="262.35" ty="160"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="dimension two montains2.png">
+                  <matrix>
+                    <Matrix tx="1114.8" ty="273.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="dimension two montains3.png">
+                  <matrix>
+                    <Matrix tx="745.45" ty="240.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="dimension two montains4.png">
+                  <matrix>
+                    <Matrix tx="767.25" ty="197.95"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="dimension two montains.png">
+                  <matrix>
+                    <Matrix tx="1865.2" ty="160.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="dimension two montains3.png">
+                  <matrix>
+                    <Matrix tx="1887.35" ty="273.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="dimension two montains4.png">
+                  <matrix>
+                    <Matrix tx="1648.2" ty="211.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="fog.png">
+                  <matrix>
+                    <Matrix ty="421.95"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="fog2.png">
+                  <matrix>
+                    <Matrix tx="609.9" ty="459.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="fog.png">
+                  <matrix>
+                    <Matrix tx="1356.85" ty="407.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="fog2.png">
+                  <matrix>
+                    <Matrix tx="1856.85" ty="459.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="fog.png">
+                  <matrix>
+                    <Matrix tx="2486.8" ty="407"/>
+                  </matrix>
+                </DOMBitmapInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

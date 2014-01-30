@@ -1,0 +1,60 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="LevelOverlayLevel1" itemID="52e439ed-00000431" linkageExportForAS="true" linkageClassName="LevelOverlayLevel1" lastModified="1390695197">
+  <timeline>
+    <DOMTimeline name="LevelOverlayLevel1">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMBitmapInstance libraryItemName="bamboo 01.png">
+                  <matrix>
+                    <Matrix a="0.553817749023438" b="0.0048065185546875" c="-0.0048065185546875" d="0.553817749023438" tx="959.55" ty="447.6"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="181.15" y="120.5"/>
+                  </transformationPoint>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="bamboo 01.png">
+                  <matrix>
+                    <Matrix a="-0.593963623046875" b="0.044036865234375" c="0.04095458984375" d="0.552322387695313" tx="930.1" ty="440.6"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="181.3" y="120.6"/>
+                  </transformationPoint>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="bridge_forground.png">
+                  <matrix>
+                    <Matrix tx="873.25" ty="503.25"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="gardenlamp.png">
+                  <matrix>
+                    <Matrix tx="712.25" ty="498.75"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="assets_0001_rots-01.png">
+                  <matrix>
+                    <Matrix a="0.422531127929688" d="0.422531127929688" tx="24.8" ty="451.25"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="71" y="142"/>
+                  </transformationPoint>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="end green.png">
+                  <matrix>
+                    <Matrix tx="-104"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="steenn.png">
+                  <matrix>
+                    <Matrix tx="291.45" ty="498.75"/>
+                  </matrix>
+                </DOMBitmapInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

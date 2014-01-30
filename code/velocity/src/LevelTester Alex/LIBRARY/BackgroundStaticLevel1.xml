@@ -1,0 +1,84 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="BackgroundStaticLevel1" itemID="52e4344b-000003d5" linkageExportForAS="true" linkageClassName="BackgroundStaticLevel1" lastModified="1390694089">
+  <timeline>
+    <DOMTimeline name="BackgroundStaticLevel1">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMBitmapInstance libraryItemName="lucht.jpg">
+                  <matrix>
+                    <Matrix a="1.79672241210938" tx="226.85"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="747.5" y="300"/>
+                  </transformationPoint>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="mountains.png">
+                  <matrix>
+                    <Matrix tx="388.95" ty="161.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="mountains2.png">
+                  <matrix>
+                    <Matrix tx="1241.15" ty="273.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="mountains3.png">
+                  <matrix>
+                    <Matrix tx="874.05" ty="241.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="mountains4.png">
+                  <matrix>
+                    <Matrix tx="1774.85" ty="211.95"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="mountains.png">
+                  <matrix>
+                    <Matrix tx="1991.85" ty="160"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="mountains4.png">
+                  <matrix>
+                    <Matrix tx="893.85" ty="198.95"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="mountains3.png">
+                  <matrix>
+                    <Matrix tx="2015.75" ty="273.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="fog.png">
+                  <matrix>
+                    <Matrix ty="421.95"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="fog2.png">
+                  <matrix>
+                    <Matrix tx="609.9" ty="459.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="fog.png">
+                  <matrix>
+                    <Matrix tx="1356.85" ty="407.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="fog2.png">
+                  <matrix>
+                    <Matrix tx="1856.85" ty="459.3"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance selected="true" libraryItemName="fog.png">
+                  <matrix>
+                    <Matrix tx="2486.8" ty="407"/>
+                  </matrix>
+                </DOMBitmapInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

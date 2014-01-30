@@ -1,0 +1,36 @@
+<DOMComponentItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Moving Platform" itemID="52e2f4e7-000001dd" linkageExportForAS="true" linkageClassName="MovingPlatform" lastModified="1390653384" displayAsComponent="false" customIconID="0" persistLivePreview11="true" editFrameIndex="1" requiredMinimumPlayerVersion="0" requiredMinimumASVersion="0">
+  <timeline>
+    <DOMTimeline name="Moving Platform">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMShape>
+                  <fills>
+                    <FillStyle index="1">
+                      <SolidColor color="#0000FF"/>
+                    </FillStyle>
+                  </fills>
+                  <edges>
+                    <Edge fillStyle1="1" edges="!1000 1000|-1000 1000!-1000 1000|-1000 -1000!-1000 -1000|1000 -1000!1000 -1000|1000 1000"/>
+                  </edges>
+                </DOMShape>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+  <parametersAsXML><![CDATA[   <property id="beginRatio">
+      <Inspectable name="beginRatio" variable="beginRatio" category="" verbose="0" defaultValue="0" type="Number"/>
+   </property>
+   <property id="gotoId">
+      <Inspectable name="gotoId" variable="gotoId" category="" verbose="0" defaultValue="-1" type="Number"/>
+   </property>
+   <property id="speed">
+      <Inspectable name="speed" variable="speed" category="" verbose="0" defaultValue="1" type="Number"/>
+   </property>
+]]></parametersAsXML>
+</DOMComponentItem>

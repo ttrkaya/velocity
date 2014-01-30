@@ -1,4 +1,4 @@
-package levels
+﻿package levels
 {
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.Contacts.b2Contact;
@@ -418,9 +418,9 @@ package levels
 					_avatarView.jump();
 				}
 			}
+
 			_avatarView.x = _avatarBody.GetPosition().x * PhysicsManager.RATIO;
 			_avatarView.y = _avatarBody.GetPosition().y * PhysicsManager.RATIO + 10;
-			
 			var cameraTarget:Number = 400 - _avatarView.x;
 			_camera.x += (cameraTarget - _camera.x) * 3 * dt;
 			if(_camera.x > 0) _camera.x = 0;
@@ -499,7 +499,7 @@ package levels
 					{
 						for(i=0; i<_rotatingPlatformBodies.length; i++)
 						{
-							if(other == _rotatingPlatformBodies[i].GetFixtureList()) return true;
+							if(other == _rotatingPlatformBodies[i].GetFixtureList()) {trace ('hit moving platform!' + i);return true;}
 						}
 					}
 				}

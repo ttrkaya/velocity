@@ -1,0 +1,30 @@
+<DOMComponentItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Waypoint" itemID="52e2f61d-00000255" linkageExportForAS="true" linkageClassName="Waypoint" lastModified="1390653443" displayAsComponent="false" customIconID="0" persistLivePreview11="true" editFrameIndex="1" requiredMinimumPlayerVersion="0" requiredMinimumASVersion="0">
+  <timeline>
+    <DOMTimeline name="Waypoint">
+      <layers>
+        <DOMLayer name="Layer 1" color="#4FFF4F" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMShape>
+                  <fills>
+                    <FillStyle index="1">
+                      <SolidColor color="#FF00FF"/>
+                    </FillStyle>
+                  </fills>
+                  <edges>
+                    <Edge fillStyle1="1" edges="!141 -142S2[200 -83 200 0!200 0[200 82 141 141!141 141[83 200 0 200!0 200[-83 200 -142 141!-142 141[-200 82 -200 0!-200 0[-200 -83 -142 -142!-142 -142[-83 -200 0 -200!0 -200[83 -200 141 -142"/>
+                  </edges>
+                </DOMShape>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+  <parametersAsXML><![CDATA[   <property id="id">
+      <Inspectable name="id" variable="id" category="" verbose="0" defaultValue="-1" type="Number"/>
+   </property>
+]]></parametersAsXML>
+</DOMComponentItem>
