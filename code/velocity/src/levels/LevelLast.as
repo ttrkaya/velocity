@@ -103,8 +103,7 @@
 			//vertical scrolling added here
 			var cameraTargetY:Number = 500 - _avatarBody.GetPosition().y * PhysicsManager.RATIO;
 			if(cameraTargetY < 0) cameraTargetY = 0;
-			if(cameraTargetY > _endBody.GetPosition().y + 1.9 * stage.stageHeight) cameraTargetY = _endBody.GetPosition().y +  1.9 * stage.stageHeight;
-			//if(cameraTargetY < CENTER.y - OUTERR) cameraTargetY = CENTER.y - OUTERR;
+			if(cameraTargetY > _endBody.GetPosition().y + 1140) cameraTargetY = _endBody.GetPosition().y +  1140;
 
 			_camera.y += (cameraTargetY - _camera.y) * dt * 5;
 			

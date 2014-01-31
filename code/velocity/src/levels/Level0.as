@@ -4,13 +4,12 @@
 	import Box2D.Dynamics.b2Body;
 	
 	import flash.display.MovieClip;
-	import flash.geom.Point;
 	
 	public class Level0 extends LevelBase
 	{
 		public function Level0(main:Main)
 		{
-			
+
 			super(main);
 			parseLevelFromSwcWithID(0);
 			

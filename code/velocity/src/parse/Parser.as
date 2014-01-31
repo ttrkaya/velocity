@@ -10,7 +10,8 @@
 	public class Parser
 	{
 		public static const levelDefs:Vector.<MovieClip> = new <MovieClip>[
-			new DefLevel0(), new DefLevel1(), new DefLevel2(), new DefLevel3(), new DefLevel4(), new DefLevel5, new DefLevel6(), new DefLevelLast()];
+	new DefLevel0(), new DefLevel1(), new DefLevel2(), new DefLevel3(), new DefLevel4(), new DefLevel5, new DefLevel6() , new DefLevelLast()];
+
 		
 		private var _staticPlatforms:Vector.<ShapeDefinition>;
 		private var _movingPlatforms:Vector.<ShapeDefinition>;
@@ -47,19 +48,19 @@
 				var el:MovieClip = level.getChildAt(i) as  MovieClip;
 				var rotation:Number = el.rotation;
 				el.rotation = 0;
-				if (el is StaticEnemy)
+				if (el is StaticEnemy || el is StaticEnemyLast)
 					_staticEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation));
-				else if (el is MovingEnemy)
+				else if (el is MovingEnemy || el is MovingEnemyLast)
 					_movingEnemies.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio, el.speed));
-				else if (el is StaticPlatform)
+				else if (el is StaticPlatform || el is StaticPlatformLast)
 					_staticPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation));
-				else if (el is MovingPlatform)
+				else if (el is MovingPlatform || el is MovingPlatformLast)
 					_movingPlatforms.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setIdAndRatio(el.gotoId, el.beginRatio, el.speed));
-				else if (el is Player)
+				else if (el is Player || el is PlayerLastLast)
 					_player = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation);
-				else if (el is EndPoint)
+				else if (el is EndPoint|| el is EndPointLast)
 					_endPoint = new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation);
-				else if (el is Waypoint)
+				else if (el is Waypoint || el is WaypointLast)
 					_waypoints.push(new ShapeDefinition(new Point(el.x, el.y), el.width, el.height, rotation).setId(el.id));
 //				else
 //					throw "wtf is this?";

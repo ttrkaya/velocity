@@ -24,6 +24,7 @@
     <option allowSourcePathOverlap="False" />
     <option benchmark="False" />
     <option es="False" />
+    <option inline="False" />
     <option locale="" />
     <option loadConfig="" />
     <option optimize="True" />
@@ -56,10 +57,15 @@
     <element path="lib\Level01-v02.swc" />
     <element path="lib\Level01.swc" />
     <element path="lib\LevelCollection.swc" />
-    <element path="lib\assets.swc" />
     <element path="lib\Box2D.swc" />
-    <element path="lib\levels.swc" />
     <element path="lib\greensock.swc" />
+    <element path="lib\introMovie.swc" />
+    <element path="lib\menuBackGround.swc" />
+    <element path="lib\levels.swc" />
+    <element path="lib\assets.swc" />
+    <element path="lib\LastLevelDef.swc" />
+    <element path="lib\LastLevelAssets.swc" />
+    <element path="lib\MenuAssets.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -83,7 +89,7 @@
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
-    <!-- example: <hidden path="..." /> -->
+    <hidden path="obj" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
@@ -93,6 +99,7 @@
   <options>
     <option showHiddenPaths="False" />
     <option testMovie="Default" />
+    <option testMovieCommand="" />
   </options>
   <!-- Plugin storage -->
   <storage />

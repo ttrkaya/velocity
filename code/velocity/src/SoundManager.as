@@ -1,6 +1,8 @@
 package
 {
 	import com.greensock.TweenMax;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	
 	import flash.events.Event;
 	import flash.media.Sound;
@@ -26,6 +28,8 @@ package
 		[Embed(source='../sounds/SoundEffects/MonkLand.mp3')]
 		private static const MonkLandSound:Class;
 		
+		private static var _musicTimer:Timer;
+		
 		private static var _soundChannel:SoundChannel;
 		private static var _enemySoundChannel:SoundChannel;
 		private static var _musicMovingChannel:SoundChannel;
@@ -33,23 +37,34 @@ package
 		
 		private static var enemySoundIsPlaying:Boolean = false;
 		
-		public static function playMusic():void
+		public static function playMusic(e:Event = null):void
 		{
+			if (_musicTimer != null)
+			{
+				_musicTimer.stop();
+				_musicTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, playMusic);
+			}
+			if (_musicMovingChannel != null)
+				_musicMovingChannel.stop();
+			if (_musicStaticChannel != null)
+				_musicStaticChannel.stop();
+			
 			var staticMusic:Sound = new StaticMusic();
-			_musicStaticChannel = staticMusic.play(0, 0, new SoundTransform(1));
+			_musicStaticChannel = staticMusic.play(0, int.MAX_VALUE, new SoundTransform(1));
 			
 			//this here is added to start the music with a different beat. Unfortunately, it does not work.
-			var startingBeat:Sound = new MovingMusicStart();
-			_musicMovingChannel = startingBeat.play(0, 0, new SoundTransform(0));
-			_musicMovingChannel.addEventListener(Event.SOUND_COMPLETE, onBeatComplete);
+			//var startingBeat:Sound = new MovingMusicStart();
+			//_musicMovingChannel = startingBeat.play(0, 0, new SoundTransform(0));
+			//_musicMovingChannel.addEventListener(Event.SOUND_COMPLETE, onBeatComplete);
 			
 			var movingMusic:Sound = new MovingMusic();
-			_musicMovingChannel = movingMusic.play(0, 0, new SoundTransform(0));
+			_musicMovingChannel = movingMusic.play(0, int.MAX_VALUE, new SoundTransform(0));
 		
 		}
 		
 		static private function onBeatComplete(e:Event):void
 		{
+			
 			_musicMovingChannel.removeEventListener(Event.SOUND_COMPLETE, onBeatComplete);
 			_musicMovingChannel.stop();
 			_musicStaticChannel.stop();
@@ -66,6 +81,17 @@ package
 		{
 			var startSound:Sound = new EndSound();
 			_soundChannel = startSound.play(0, 1, new SoundTransform(0.6));
+		}
+		public static function restartMusic():void
+		{
+			if (_musicMovingChannel != null)
+				TweenMax.to(_musicMovingChannel, 1, { volume: 0 } );
+			if (_musicStaticChannel != null)
+				TweenMax.to(_musicStaticChannel, 1, { volume: 0 } );
+			
+			_musicTimer = new Timer(1100, 1);
+			_musicTimer.addEventListener(TimerEvent.TIMER_COMPLETE, playMusic);
+			_musicTimer.start();
 		}
 		
 		public static function playJumpSound():void
@@ -107,15 +133,6 @@ package
 			if (_musicMovingChannel != null)
 				TweenMax.to(_musicMovingChannel, 1, {volume: 0});
 		}
-		
-		public static function syncMusic():void
-		{
-			//Syncing makes the game crash
-			//var movingMusic:Sound = new MovingMusic();
-			//var oldVolume:Number = _musicMovingChannel.soundTransform.volume;
-			//_musicMovingChannel = movingMusic.play(_musicStaticChannel.position, int.MAX_VALUE, new SoundTransform(oldVolume));
-		
-		}
-	
+			
 	}
 }

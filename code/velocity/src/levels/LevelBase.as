@@ -222,7 +222,7 @@
 		
 		public function update(dt:Number):void
 		{
-			throw "override this!";
+			baseUpdate(dt);
 		}
 		
 		protected function baseUpdate(dt:Number):void

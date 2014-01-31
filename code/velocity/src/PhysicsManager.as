@@ -30,16 +30,16 @@ package
 			gravity.Set(0,50);
 			_world = new b2World(gravity,true);
 			
-			_debugSprite = new Sprite();
-			_debugSprite.mouseChildren = false;
-			_debugSprite.mouseEnabled = false;
-			var debugDrawer:b2DebugDraw = new b2DebugDraw();
-			debugDrawer.SetSprite(_debugSprite);
-			debugDrawer.SetDrawScale(RATIO * 0.4);
-			debugDrawer.SetLineThickness(2);
-			debugDrawer.SetFillAlpha(0.1);
-			debugDrawer.SetFlags(b2DebugDraw.e_shapeBit);
-			_world.SetDebugDraw(debugDrawer);
+			//_debugSprite = new Sprite();
+			//_debugSprite.mouseChildren = false;
+			//_debugSprite.mouseEnabled = false;
+			//var debugDrawer:b2DebugDraw = new b2DebugDraw();
+			//debugDrawer.SetSprite(_debugSprite);
+			//debugDrawer.SetDrawScale(RATIO * 0.4);
+			//debugDrawer.SetLineThickness(2);
+			//debugDrawer.SetFillAlpha(0.1);
+			//debugDrawer.SetFlags(b2DebugDraw.e_shapeBit);
+			//_world.SetDebugDraw(debugDrawer);
 			//_debugSpriteContainer.addChild(_debugSprite);
 		}
 		

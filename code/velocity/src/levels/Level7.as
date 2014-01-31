@@ -13,7 +13,7 @@ package levels
 		private var _wheel:MovieClip;
 		private var _wheelMoving:MovieClip;
 		
-		private const CENTER:Point = new Point(400, -600);
+		private const CENTER:Point = new Point(800, -600);
 		private const R:Number = 150;
 		private const W:Number = 60;
 		private const H:Number = 10;
@@ -45,9 +45,11 @@ package levels
 			_wheel = new Wheel();
 			_camera.addChild(_wheel);
 			
+			
 			_wheelMoving = new WheelMoving();
-			_wheelMoving.x = 400;
-			_wheelMoving.y = -600;
+			_wheelMoving.x = CENTER.x;
+			_wheelMoving.y = CENTER.y;
+						
 			_camera.addChild(_wheelMoving);
 			_camera.setChildIndex(_wheelMoving, 0);
 			_camera.setChildIndex(_wheel, 0);
@@ -101,6 +103,7 @@ package levels
 			var cameraTargetY:Number = 500 - _avatarBody.GetPosition().y * PhysicsManager.RATIO;
 			if(cameraTargetY < 0) cameraTargetY = 0;
 			_camera.y += (cameraTargetY - _camera.y) * dt;
+			
 			
 			_wheel.alpha = _staticAlpha;
 			_wheelMoving.alpha = 1 - _wheel.alpha;
