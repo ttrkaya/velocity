@@ -25,7 +25,7 @@
 		
 		public static var stage:Stage;
 		
-		private static const levelClasses:Vector.<Class> = new <Class>[Level0, Level1, Level2, Level3, Level4, Level5, Level6, Level7];
+		private static const levelClasses:Vector.<Class> = new <Class>[Level0, Level1, Level2, Level3, Level4, Level5, Level6, LevelLast];
 		
 		public function Main()
 		{

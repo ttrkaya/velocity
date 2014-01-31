@@ -429,6 +429,9 @@
 				var rightLimit:Number = -_platformsView.width + 800;
 				if(_camera.x < rightLimit) _camera.x = rightLimit;
 				_bgMoving.x = _bgStatic.x = _camera.x / 3;
+				//EDIT: see if this does not break the build
+				_bgMoving.y = _bgStatic.y = _camera.y / 3;
+				
 				
 				_platformsView.alpha = _staticAlpha;
 				_foreGround.alpha = 1 - _platformsView.alpha;
@@ -499,7 +502,7 @@
 					{
 						for(i=0; i<_rotatingPlatformBodies.length; i++)
 						{
-							if(other == _rotatingPlatformBodies[i].GetFixtureList()) {trace ('hit moving platform!' + i);return true;}
+							if(other == _rotatingPlatformBodies[i].GetFixtureList()) {return true;}
 						}
 					}
 				}
